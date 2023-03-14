@@ -1,17 +1,17 @@
 #pragma once
 #include "engine/Objects/GameObject/GameObject.h"
-#include "engine/Utils/Interfaces/IRenderable.h"
 
-#include <iostream>
+#include <string>
 using namespace std;
 
-#define LANDSCAPE_VERTEX "Landscape/Shader/Landscape_vertex.glsl"
-#define LANDSCAPE_FRAG "Landscape/Shader/Landscape_frag.glsl"
-
 class LandscapeMesh;
+class MeshComponent;
 
-class Landscape : public GameObject, public IRenderable
+class Landscape : public GameObject
 {
+    MeshComponent* mMeshComponent = nullptr;
+    LandscapeMesh* mMeshLandscape = nullptr;
+
     string mHeightmapPath = "";
     float mMaxHeight = 1;
 
@@ -19,6 +19,8 @@ class Landscape : public GameObject, public IRenderable
     float mRotateSpeed = 1;
 
 public:
+    virtual void SetScale(const vec3& _scale) override {mTransform.GetTransformData()->mLocalScale = vec3(_scale.x, 1, _scale.z);}
+
     bool CanRotate() const {return mCanRotate;}
     void SetCanRotate(const bool _canRotate) {mCanRotate = _canRotate;}
     void ToggleRotation(const bool _toggle) {if(_toggle) mCanRotate = !mCanRotate;}
@@ -29,13 +31,9 @@ public:
 
 public:
     Landscape();
-    Landscape(const int _nbVertexWidth, const int _nbVertexLength);
-    Landscape(const vec3& _positions, const vec3& _rotations, const vec3& _scale);
 
 public:
     virtual void Update(const float _deltaTime) override;
-    virtual void Render(Camera* _renderingCamera) override;
-    virtual void CleanRessources() override;
 
 public:
     void ApplyHeightmap(const string& _heightmapPath, const float _maxHeight);

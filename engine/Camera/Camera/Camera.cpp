@@ -8,12 +8,6 @@ Camera::Camera(const Transform& _transform) : GameObject(_transform){}
 
 Camera::Camera(const vec3& _position, const vec3& _rotation) : GameObject(_position, _rotation, vec3(1)){}
 
-void Camera::RefreshCamera()
-{
-    const mat4 _rotationMatrix = mTransform.GetRotationMatrix();
-    mTransform.ApplyRotation(_rotationMatrix);
-}
-
 //LookAtLH & PerspectiveLH to have X = right, Y = up and Z = forward (-Z out of screen)
 mat4 Camera::GetViewMatrix() const
 {

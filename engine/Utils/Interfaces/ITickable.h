@@ -15,4 +15,5 @@ public:
 
 public:
     virtual void Update(const float _tickSpeed) = 0;
+    virtual void LateUpdate(const float _tickSpeed) = 0;
 };

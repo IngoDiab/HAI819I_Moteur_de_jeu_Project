@@ -8,23 +8,30 @@ Scene::~Scene()
 
 void Scene::UnloadScene()
 {
-    mObjectManager.DeleteObjects();
-    mShaderManager.DeleteAllShaders();
+    ObjectManager* _objectManager = ObjectManager::Instance();   
+    _objectManager->DeleteObjects();
+
+    ShaderManager* _shaderManager = ShaderManager::Instance();
+    _shaderManager->DeleteAllShaders();
+
+    delete mSkybox;
 }
 
 void Scene::Update(const float _deltaTime)
 {
+    ObjectManager* _objectManager = ObjectManager::Instance();
     const float _sceneDeltaTime = _deltaTime*mTickSpeed;
-    mObjectManager.TickObjects(_sceneDeltaTime);
+    _objectManager->TickObjects(_sceneDeltaTime);
+}
+
+void Scene::LateUpdate(const float _deltaTime)
+{
+    ObjectManager* _objectManager = ObjectManager::Instance();
+    const float _sceneDeltaTime = _deltaTime*mTickSpeed;
+    _objectManager->TickLateObjects(_sceneDeltaTime);
 }
 
 void Scene::DrawSkybox(Camera* _camera)
 {
-    mSkybox.Draw(_camera);
-}
-
-
-void Scene::DrawScene(Camera* _camera)
-{
-    mObjectManager.DrawObjects(_camera);
+    if(mSkybox) mSkybox->Draw(_camera);
 }

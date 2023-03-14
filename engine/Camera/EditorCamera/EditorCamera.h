@@ -19,7 +19,7 @@ public:
     virtual void MoveUpDown(const float _move) override;
 
     void BeginRotate(const bool _rotate);
-    virtual void RotateX(float _rotation) override;
-    virtual void RotateY(float _rotation) override;
-    virtual void RotateZ(float _rotation) override;
+    virtual void RotateLocalAxisX(float _rotation) override;
+    virtual void RotateLocalAxisY(float _rotation) override;
+    virtual void RotateLocalAxisZ(float _rotation) override;
 };

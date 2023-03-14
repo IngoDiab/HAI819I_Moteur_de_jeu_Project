@@ -13,13 +13,12 @@ class SceneTP1 final : public Scene
 
 public:
     virtual void LoadScene() override;
-    virtual void UnloadScene() override;
 
 private :
     Landscape* CreateLandscape();
     void InitEditorCamera() const;
-    void InitOrbitalCamera(Landscape*& _landscape);
+    void InitOrbitalCamera(Landscape* _landscape);
     void BindSceneInput();
-    void BindLandscapeInput(Landscape*& _landscape) const;
+    void BindLandscapeInput(Landscape* _landscape) const;
     void TurnLandscapeOrbit(const bool _active);
 };

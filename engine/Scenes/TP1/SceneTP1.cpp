@@ -4,9 +4,12 @@
 #include "engine/Camera/EditorCamera/EditorCamera.h"
 #include "engine/Camera/OrbitalCamera/OrbitalCamera.h"
 #include "engine/Engine/Engine.h"
+#include "engine/Components/MeshComponent/MeshComponent.h"
 
 void SceneTP1::LoadScene()
 {
+    mSkybox = new Skybox();
+    mSkybox->ChangeSkybox("Textures/Skybox/Base/", ".jpg");
     mLandscape = CreateLandscape();
     InitEditorCamera();
     InitOrbitalCamera(mLandscape);
@@ -14,15 +17,10 @@ void SceneTP1::LoadScene()
     BindLandscapeInput(mLandscape);
 }
 
-void SceneTP1::UnloadScene()
-{
-    Scene::UnloadScene();
-}
-
 Landscape* SceneTP1::CreateLandscape()
 {
     ObjectManager* _objectManager = ObjectManager::Instance();
-    Landscape* _landscape = _objectManager->Create<Landscape>(new Landscape(vec3(0,20,0), vec3(0), vec3(200,1,200)));
+    Landscape* _landscape = _objectManager->Create<Landscape>();
     _landscape->ChangeResolution(16,16);
     _landscape->ApplyHeightmap("Textures/Heightmaps/Heightmap_Mountain.png",100);
     return _landscape;
@@ -30,13 +28,15 @@ Landscape* SceneTP1::CreateLandscape()
 
 void SceneTP1::InitEditorCamera() const
 {
-   EditorCamera::Instance()->SetPosition(vec3(0,200,-200));
+   EditorCamera::Instance()->SetPosition(vec3(0,100,-200));
 }
 
-void SceneTP1::InitOrbitalCamera(Landscape*& _landscape)
+void SceneTP1::InitOrbitalCamera(Landscape* _landscape)
 {
     ObjectManager* _objectManager = ObjectManager::Instance();
-    mOrbitalCamera = _objectManager->Create<OrbitalCamera>(new OrbitalCamera(_landscape->GetTransform(), 300));
+    mOrbitalCamera = _objectManager->Create<OrbitalCamera>();
+    mOrbitalCamera->SetTarget(_landscape);
+    mOrbitalCamera->SetDistanceFromTarget(300);
     mOrbitalCamera->SetMovementSpeed(20);
 
     InputManager* _inputManager = InputManager::Instance();
@@ -50,7 +50,7 @@ void SceneTP1::BindSceneInput()
     _inputManager->BindKey(GLFW_KEY_C , ACTION_TYPE::PRESS, this, (void* (Object::*)(bool))&SceneTP1::TurnLandscapeOrbit);
 }
 
-void SceneTP1::BindLandscapeInput(Landscape*& _landscape) const
+void SceneTP1::BindLandscapeInput(Landscape* _landscape) const
 {
     InputManager* _inputManager = InputManager::Instance();
     _inputManager->BindAxis({{GLFW_KEY_UP,GLFW_KEY_DOWN}}, _landscape, (void* (Object::*)(float))&Landscape::ChangeSpeed);

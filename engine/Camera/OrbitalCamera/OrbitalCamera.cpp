@@ -1,17 +1,19 @@
 #include "OrbitalCamera.h"
 #include "engine/Engine/Engine.h"
-#include "engine/Transform/Transform.h"
+#include "engine/Objects/GameObject/GameObject.h"
 
 OrbitalCamera::OrbitalCamera(){}
 
-OrbitalCamera::OrbitalCamera(Transform* _target, float _distanceTarget): mTarget(_target), mDistanceTarget(_distanceTarget)
+OrbitalCamera::OrbitalCamera(GameObject* _target, float _distanceTarget): mTarget(_target), mDistanceTarget(_distanceTarget)
 {
     SetPosition(vec3(0,mDistanceTarget,-mDistanceTarget));
 }
 
-void OrbitalCamera::Update(const float _tickSpeed)
+void OrbitalCamera::LateUpdate(const float _tickSpeed)
 {
+    Camera::LateUpdate(_tickSpeed);
     UpdatePosition();
+    UpdateLookAtTarget();
 }
 
 void OrbitalCamera::MoveLateral(float _move)
@@ -33,14 +35,14 @@ void OrbitalCamera::MoveUpDown(float _move)
     ClampAngle(mElevationAngle, -89, 89, false);
 }
 
-void OrbitalCamera::RefreshCamera()
+void OrbitalCamera::UpdateLookAtTarget()
 {
-    mTransform.AlignForward(mTransform.GetPosition(), mTarget->GetPosition());
+    mTransform.AlignForward(mTransform.GetPosition(), mTarget->GetWorldPosition());
 }
 
 void OrbitalCamera::UpdatePosition()
 {
-    const vec3 _center = mTarget->GetPosition();
+    const vec3 _center = mTarget->GetTransform().mWorldPosition;
     float _xPos = _center.x + cos(radians(mAzimutAngle)) * cos(radians(mElevationAngle)) * mDistanceTarget;
     float _yPos = _center.y + sin(radians(mElevationAngle)) * mDistanceTarget;
     float _zPos = _center.z + sin(radians(mAzimutAngle)) * cos(radians(mElevationAngle)) * mDistanceTarget;

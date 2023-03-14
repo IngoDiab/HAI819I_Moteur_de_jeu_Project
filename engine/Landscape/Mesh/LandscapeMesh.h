@@ -9,6 +9,7 @@ class LandscapeMesh : public Plane
 {
 
 public:
+    LandscapeMesh();
     LandscapeMesh(const int _nbVertexWidth, const int _nbVertexLength);
 
 public:

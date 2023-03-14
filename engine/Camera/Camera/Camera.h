@@ -19,7 +19,7 @@ protected:
     bool mIsActive = false;
 
     float mFOV = 45.;
-    float mRatio = 4./3.;
+    float mRatio = 16./9.;
     float mZNear = 0.1;
     float mZFar = 1000.;
 
@@ -39,10 +39,7 @@ public:
     void SetScale(const vec3& _scale) {mTransform.SetScale(_scale);}
 
     bool IsActive() const {return mIsActive;}
-    void Activate(const bool _active) {mIsActive = _active;}
-
-public:
-    virtual void RefreshCamera();
+    void Activate(const bool _active) {mIsActive = _active; mTransform.SetDrawMeshAxis(!_active);}
 
 public:
     mat4 GetViewMatrix() const;

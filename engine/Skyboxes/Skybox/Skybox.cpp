@@ -11,6 +11,12 @@ Skybox::Skybox()
     mMaterial->Initialize();
 }
 
+Skybox::~Skybox()
+{
+    delete mMesh;
+    delete mMaterial;
+}
+
 void Skybox::Draw(Camera* _renderingCamera)
 {
     //Calculate VP
@@ -25,8 +31,7 @@ void Skybox::Draw(Camera* _renderingCamera)
     mMesh->DrawMesh();
 }
 
-Skybox::~Skybox()
+void Skybox::ChangeSkybox(const string& _path, const string& _format)
 {
-    delete mMesh;
-    delete mMaterial;
+    mMaterial->ChangeSkyboxTextures(_path, _format);
 }

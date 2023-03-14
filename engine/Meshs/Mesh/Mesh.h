@@ -57,5 +57,5 @@ protected:
     virtual void CreateIndices() = 0;
 
 public:
-    virtual void DrawMesh();
+    void DrawMesh();
 };

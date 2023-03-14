@@ -14,8 +14,8 @@ void EditorCamera::Initialize()
 {
     //Rotation
     InputManager::Instance()->BindKey(GLFW_MOUSE_BUTTON_RIGHT, ACTION_TYPE::HOLD, this, (void* (Object::*)(bool))&EditorCamera::BeginRotate);
-    InputManager::Instance()->BindAxis({{MOUSE_Y, MOUSE_Y}}, this, (void* (Object::*)(float))&EditorCamera::RotateX);
-    InputManager::Instance()->BindAxis({{MOUSE_X, MOUSE_X}}, this, (void* (Object::*)(float))&EditorCamera::RotateY);
+    InputManager::Instance()->BindAxis({{MOUSE_Y, MOUSE_Y}}, this, (void* (Object::*)(float))&EditorCamera::RotateLocalAxisX);
+    InputManager::Instance()->BindAxis({{MOUSE_X, MOUSE_X}}, this, (void* (Object::*)(float))&EditorCamera::RotateLocalAxisY);
 
     //Move Camera
     InputManager::Instance()->BindAxis({{GLFW_KEY_W, GLFW_KEY_S}}, this, (void* (Object::*)(float))&EditorCamera::MoveForwardBackward);
@@ -61,20 +61,20 @@ void EditorCamera::BeginRotate(const bool _rotate)
     }
 }
 
-void EditorCamera::RotateX(float _rotate)
+void EditorCamera::RotateLocalAxisX(float _rotate)
 {
     if(!mCanRotate || !mIsActive)return;
-    GameObject::RotateX(_rotate, mRotationSpeed);
+    GameObject::RotateLocalAxisX(_rotate * mRotationSpeed*Engine::Instance()->DeltaTime());
 }
 
-void EditorCamera::RotateY(float _rotate)
+void EditorCamera::RotateLocalAxisY(float _rotate)
 {
     if(!mCanRotate || !mIsActive)return;
-    GameObject::RotateY(_rotate, mRotationSpeed);
+    GameObject::RotateLocalAxisY(_rotate* mRotationSpeed*Engine::Instance()->DeltaTime());
 }
 
-void EditorCamera::RotateZ(float _rotate)
+void EditorCamera::RotateLocalAxisZ(float _rotate)
 {
     if(!mCanRotate || !mIsActive)return;
-    GameObject::RotateZ(_rotate, mRotationSpeed);
+    GameObject::RotateLocalAxisZ(_rotate* mRotationSpeed*Engine::Instance()->DeltaTime());
 }

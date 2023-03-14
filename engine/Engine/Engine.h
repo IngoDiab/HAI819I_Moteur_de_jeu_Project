@@ -1,29 +1,19 @@
 #pragma once
-#include <map>
 #include <string>
-#include <exception>
+using namespace std;
 
 #include "engine/Camera/EditorCamera/EditorCamera.h"
 #include "engine/Inputs/InputManager/InputManager.h"
 #include "engine/Inputs/MouseManager/MouseManager.h"
+#include "engine/Objects/ObjectManager/ObjectManager.h"
+#include "engine/Renderer/Renderer.h"
+#include "engine/ShaderHandlers/ShaderManager/ShaderManager.h"
+#include "engine/Scenes/SceneManager/SceneManager.h"
 #include "engine/Utils/Singleton/Singleton.h"
 #include "engine/Buffers/VAO/VAO.h"
 
 class Window;
 class Camera;
-class Scene;
-
-class CustomException: public exception
-{
-    string mErrorException = "";
-
-public:
-    CustomException(const string& _msg) : mErrorException(_msg){}
-    virtual const char* what() const throw()
-    {
-        return mErrorException.c_str();
-    }
-};
 
 class Engine final : public Singleton<Engine>
 {
@@ -32,15 +22,16 @@ class Engine final : public Singleton<Engine>
 
     Window* mMainWindow = nullptr;
     Camera* mActiveCamera = nullptr;
-    
-    Scene* mCurrentScene = nullptr;
-    map<string, Scene*> mScenes = map<string, Scene*>();
 
     VAO mMainVAO;
 
-    EditorCamera mEditorCamera;
+    EditorCamera* mEditorCamera = nullptr;
     InputManager mInputManager;
     MouseManager mMouseManager;
+    ObjectManager mObjectManager;
+    Renderer mRenderer;
+    ShaderManager mShaderManager;
+    SceneManager mSceneManager;
 
 public:
     float DeltaTime() const {return mDeltaTime;}
@@ -50,8 +41,6 @@ public:
 
     Camera* GetViewportCamera() const {return mActiveCamera;};
 
-    Scene* GetCurrentScene() {return mCurrentScene;}
-
 public:
     Engine();
 
@@ -60,13 +49,6 @@ public:
     void Run();
     void CalculateDeltaTime();
 
-    void AddScene(const string& _name, Scene* const _scene);
-    void LoadScene(const string& _name);
-    void UnloadCurrentScene();
-
     void SetViewportCamera(Camera* const _camera);
     void ResetCameraToEditor();
-
-private:
-    void AddSceneToMap(const string& _name, Scene* const _scene);
 };

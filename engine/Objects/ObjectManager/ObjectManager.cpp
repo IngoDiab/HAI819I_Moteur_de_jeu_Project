@@ -1,35 +1,41 @@
 #include "ObjectManager.h"
+#include <algorithm>
+void ObjectManager::AddGameObject(GameObject* _object)
+{
+    if(Exist(_object)) return;
+    mSceneGameObjects.push_back(_object);
+}
 
-#include "engine/Camera/Camera/Camera.h"
+void ObjectManager::RemoveGameObject(GameObject* _object)
+{
+    if(!Exist(_object)) return;
+    mSceneGameObjects.erase(find(mSceneGameObjects.begin(), mSceneGameObjects.end(), _object));
+}
 
 void ObjectManager::TickObjects(const float _deltaTime)
 {
-    for(ITickable* _object : mTickableObject)
+    for(GameObject* _object : mSceneGameObjects)
         _object->Update(_deltaTime*_object->GetTickSpeed());
+    for(GameObject* _object : mSceneGameObjects)
+        _object->UpdateModelMatrix();
 }
 
-void ObjectManager::DrawObjects(Camera* _camera)
+void ObjectManager::TickLateObjects(const float _deltaTime)
 {
-    for(IRenderable* _object : mRenderableObjects)
-        _object->Render(_camera);
+    for(GameObject* _object : mSceneGameObjects)
+        _object->LateUpdate(_deltaTime*_object->GetTickSpeed());
+}
+
+bool ObjectManager::Exist(GameObject* _object) const
+{
+    for(GameObject* _objectInScene : mSceneGameObjects)
+        if(_objectInScene == _object) return true;
+    return false;
 }
 
 void ObjectManager::DeleteObjects()
 {
-    for(ITickable* _object : mTickableObject)
-        if(_object)
-        {
-            _object = nullptr;
-            delete _object;
-        }
-
-    for(IRenderable* _object : mRenderableObjects)
-    {
-        _object->CleanRessources();
-        if(_object)if(_object)
-        {
-            _object = nullptr;
-            delete _object;
-        }
-    }
+    for(GameObject* _object : mSceneGameObjects)
+        if(_object) delete _object;
+    mSceneGameObjects.clear();
 }

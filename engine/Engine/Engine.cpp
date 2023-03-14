@@ -1,12 +1,10 @@
 #include "Engine.h"
 
-#include<iostream>
-using namespace std;
-
 #include <GLFW/glfw3.h>
 #include "engine/Windows/Window.h"
 #include "engine/Camera/Camera/Camera.h"
-#include "engine/Scenes/Scene/Scene.h"
+
+#include <iostream>
 
 Engine::Engine()
 {}
@@ -18,7 +16,8 @@ void Engine::Initialize(const int _widthWindow, const int _heightWindow, const s
     mMainWindow->ActivateInput(GLFW_STICKY_KEYS, GL_TRUE);
     mMainWindow->EnableDepth(true);
 
-    mEditorCamera.Initialize();
+    mEditorCamera = mObjectManager.Create<EditorCamera>();
+    mEditorCamera->Initialize();
     ResetCameraToEditor();
 
     mMainVAO.GenerateVAO();
@@ -35,40 +34,7 @@ void Engine::Run()
         mInputManager.CheckStateAllAxis(mMainWindow->GetWindow());
 
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-        try
-        {
-            if(!mCurrentScene) throw CustomException("No current Scene.");
-            mCurrentScene->Update(mDeltaTime);
-        }
-        catch(const CustomException& e)
-        {
-            cerr << e.what() << '\n';
-        }
-        
-        try
-        {
-            if(!mActiveCamera) throw CustomException("No active Camera.");
-            mActiveCamera->RefreshCamera();
-        }
-        catch(const CustomException& e)
-        {
-            cerr << e.what() << '\n';
-        }
-
-        try
-        {
-            if(!mCurrentScene) throw CustomException("No current Scene.");
-            mMainWindow->EnableDepth(false);
-            mCurrentScene->DrawSkybox(mActiveCamera);
-            mMainWindow->EnableDepth(true);
-            // mMainWindow->PolygonMode(GL_FRONT_AND_BACK, GL_LINE);
-            mCurrentScene->DrawScene(mActiveCamera);
-            // mMainWindow->PolygonMode(GL_FRONT_AND_BACK,  GL_FILL);
-        }
-        catch(const CustomException& e)
-        {
-            cerr << e.what() << '\n';
-        }
+        mSceneManager.ProcessCurrentScene(mActiveCamera, mMainWindow, mDeltaTime);
 
         // Swap buffers
         glfwSwapBuffers(mMainWindow->GetWindow());
@@ -86,52 +52,6 @@ void Engine::CalculateDeltaTime()
     mLastFrame = _currentFrame;
 }
 
-void Engine::AddSceneToMap(const string& _name, Scene* const _scene)
-{
-    if(mScenes[_name]) throw CustomException("Name : " + _name + " is already taken for another registered Scene.");
-    mScenes[_name] = _scene;
-}
-
-void Engine::AddScene(const string& _name, Scene* const _scene)
-{
-    try
-    {
-        AddSceneToMap(_name, _scene);
-    }
-    catch(const CustomException& e)
-    {
-        cerr << e.what() << '\n';
-    }
-}
-
-void Engine::LoadScene(const string& _name)
-{
-    if(mCurrentScene) mCurrentScene->UnloadScene();
-    try
-    {
-        mCurrentScene = mScenes[_name];
-        if(!mCurrentScene) throw CustomException("Can't load scene " + _name + " because scene is not registered.");
-        mCurrentScene->LoadScene();
-    }
-    catch(const CustomException& e)
-    {
-        cerr << e.what() << '\n';
-    }
-}
-
-void Engine::UnloadCurrentScene()
-{
-    try
-    {
-        if(!mCurrentScene) throw CustomException("Can't unload current because there's no current scene.");
-        mCurrentScene->LoadScene();
-    }
-    catch(const CustomException& e)
-    {
-        cerr << e.what() << '\n';
-    }
-}
-
 void Engine::SetViewportCamera(Camera* const _camera)
 {
     if(!_camera) return ResetCameraToEditor();
@@ -142,5 +62,5 @@ void Engine::SetViewportCamera(Camera* const _camera)
 
 void Engine::ResetCameraToEditor()
 {
-    SetViewportCamera(&mEditorCamera);
+    SetViewportCamera(mEditorCamera);
 }

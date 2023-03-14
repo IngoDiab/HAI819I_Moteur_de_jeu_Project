@@ -12,9 +12,8 @@ using namespace std;
 
 class Scene : public Object, public ITickable
 {
-    ObjectManager mObjectManager;
-    ShaderManager mShaderManager;
-    Skybox mSkybox;
+protected:
+    Skybox* mSkybox = nullptr;
 
 public:
     ~Scene();
@@ -24,6 +23,6 @@ public:
     virtual void UnloadScene();
 
     virtual void Update(const float _deltaTime) override;
+    virtual void LateUpdate(const float _deltaTime) override;
     void DrawSkybox(Camera* _camera);
-    void DrawScene(Camera* _camera);
 };

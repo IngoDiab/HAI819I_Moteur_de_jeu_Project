@@ -1,7 +1,12 @@
 #include "LandscapeMaterial.h"
 #include "engine/Landscape/ShaderHandler/LandscapeShaderHandler.h"
 
-LandscapeMaterial::LandscapeMaterial(){}
+LandscapeMaterial::LandscapeMaterial()
+{
+    LandscapeShaderHandler* _shaderHandler = new LandscapeShaderHandler(LANDSCAPE_VERTEX, LANDSCAPE_FRAG);
+    _shaderHandler->Initialize();
+    SetShader(_shaderHandler);
+}
 
 LandscapeMaterial::LandscapeMaterial(const string& _vertexShader, const string& _fragShader)
 {

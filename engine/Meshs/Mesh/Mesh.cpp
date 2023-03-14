@@ -1,6 +1,5 @@
 #include "Mesh.h"
-#include <iostream>
-using namespace std;
+
 #define GL_ARRAY_BUFFER 0x8892
 #define GL_ELEMENT_ARRAY_BUFFER 0x8893
 #define GL_FLOAT 0x1406

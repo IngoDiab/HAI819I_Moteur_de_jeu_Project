@@ -1,7 +1,6 @@
 #include "LandscapeMesh.h"
 
-#include "iostream"
-using namespace std;
+LandscapeMesh::LandscapeMesh() : Plane(16,16){}
 
 LandscapeMesh::LandscapeMesh(const int _nbVertexWidth, const int _nbVertexLength) : Plane(ClampVertexNb(_nbVertexWidth),ClampVertexNb(_nbVertexLength)){}
 

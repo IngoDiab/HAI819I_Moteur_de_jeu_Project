@@ -1,5 +1,8 @@
 #pragma once
 
+#include <string>
+using namespace std;
+
 #include "engine/Utils/Singleton/Singleton.h"
 
 class SkyboxMesh;
@@ -20,4 +23,5 @@ public:
 
 public:
     void Draw(Camera* _renderingCamera);
+    void ChangeSkybox(const string& _path, const string& _format);
 };

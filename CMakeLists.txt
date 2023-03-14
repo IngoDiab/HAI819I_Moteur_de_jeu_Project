@@ -78,6 +78,11 @@ add_executable(engine
 	engine/Camera/OrbitalCamera/OrbitalCamera.h
 	engine/Camera/OrbitalCamera/OrbitalCamera.cpp
 	
+	engine/Components/Component/Component.h
+	engine/Components/Component/Component.cpp
+	engine/Components/MeshComponent/MeshComponent.h
+	engine/Components/MeshComponent/MeshComponent.cpp
+	
 	engine/Engine/Engine.h
 	engine/Engine/Engine.cpp
 	
@@ -110,6 +115,8 @@ add_executable(engine
 	engine/Meshs/Cube/Cube.cpp
 	engine/Meshs/Plane/Plane.h
 	engine/Meshs/Plane/Plane.cpp
+	engine/Meshs/Sphere/Sphere.h
+	engine/Meshs/Sphere/Sphere.cpp
 	
 	engine/Objects/Object/Object.h
 	engine/Objects/GameObject/GameObject.h
@@ -117,13 +124,31 @@ add_executable(engine
 	engine/Objects/ObjectManager/ObjectManager.h
 	engine/Objects/ObjectManager/ObjectManager.cpp
 	
+	engine/Planets/Planet/Planet.h
+	engine/Planets/Planet/Planet.cpp
+	engine/Planets/Material/EarthMaterial/EarthMaterial.h
+	engine/Planets/Material/EarthMaterial/EarthMaterial.cpp
+	engine/Planets/Material/MoonMaterial/MoonMaterial.h
+	engine/Planets/Material/MoonMaterial/MoonMaterial.cpp
+	engine/Planets/Material/SunMaterial/SunMaterial.h
+	engine/Planets/Material/SunMaterial/SunMaterial.cpp
+	
+	engine/Renderer/Renderer.h
+	engine/Renderer/Renderer.cpp
+	
 	engine/Scenes/Scene/Scene.h
 	engine/Scenes/Scene/Scene.cpp
+	engine/Scenes/SceneManager/SceneManager.h
+	engine/Scenes/SceneManager/SceneManager.cpp
 	engine/Scenes/TP1/SceneTP1.h
 	engine/Scenes/TP1/SceneTP1.cpp
+	engine/Scenes/TP2/SceneTP2.h
+	engine/Scenes/TP2/SceneTP2.cpp
 	
 	engine/ShaderHandlers/ShaderHandler/ShaderHandler.h
 	engine/ShaderHandlers/ShaderHandler/ShaderHandler.cpp
+	engine/ShaderHandlers/PhongShaderHandler/PhongShaderHandler.h
+	engine/ShaderHandlers/PhongShaderHandler/PhongShaderHandler.cpp
 	engine/ShaderHandlers/ShaderManager/ShaderManager.h
 	engine/ShaderHandlers/ShaderManager/ShaderManager.cpp
 	
@@ -140,6 +165,12 @@ add_executable(engine
 	
 	engine/Transform/Transform.h
 	engine/Transform/Transform.cpp
+	engine/Transform/Material/TransformMaterial.h
+	engine/Transform/Material/TransformMaterial.cpp
+	engine/Transform/Mesh/TransformMesh.h
+	engine/Transform/Mesh/TransformMesh.cpp
+	engine/Transform/Shader/Transform_frag.glsl
+	engine/Transform/Shader/Transform_vertex.glsl
 	
 	engine/Utils/Singleton/Singleton.h
 	engine/Utils/TextureLoader/TextureLoader.h

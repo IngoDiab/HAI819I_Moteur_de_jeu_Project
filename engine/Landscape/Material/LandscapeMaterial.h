@@ -5,6 +5,9 @@
 #include <string>
 using namespace std;
 
+#define LANDSCAPE_VERTEX "Landscape/Shader/Landscape_vertex.glsl"
+#define LANDSCAPE_FRAG "Landscape/Shader/Landscape_frag.glsl"
+
 class LandscapeMaterial : public Material
 {
     float mHeightGrassRock = 50;

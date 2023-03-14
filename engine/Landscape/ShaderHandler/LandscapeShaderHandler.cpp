@@ -1,9 +1,6 @@
 #include "LandscapeShaderHandler.h"
 #include <GL/glew.h>
 
-#include <iostream>
-using namespace std;
-
 LandscapeShaderHandler::LandscapeShaderHandler(const string& _vertexShader, const string& _fragShader) : ShaderHandler(_vertexShader,_fragShader)
 {
 

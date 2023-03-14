@@ -14,7 +14,7 @@ public:
     void SetCanRotate(const bool _canRotate) {mCanRotate = _canRotate;}
 
 public:
-    virtual void RotateX(const float _rotation) = 0;
-    virtual void RotateY(const float _rotation) = 0;
-    virtual void RotateZ(const float _rotation) = 0;
+    virtual void RotateLocalAxisX(const float _rotation) = 0;
+    virtual void RotateLocalAxisY(const float _rotation) = 0;
+    virtual void RotateLocalAxisZ(const float _rotation) = 0;
 };

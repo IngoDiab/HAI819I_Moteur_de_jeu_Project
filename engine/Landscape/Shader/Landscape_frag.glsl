@@ -18,8 +18,6 @@ void main(){
         vec4 _texelGrass = texture(mGrassTex, o_uv);
         vec4 _texelRock = texture(mRockTex, o_uv);
         vec4 _texelSnowrock = texture(mSnowrockTex, o_uv);
-        // FragColor = texture(mGrassTex, o_uv);
-        // //FragColor = vec4(0.2, 0.2, 0.4, 1.0);
 
         float mHeightGrassRockMin = mHeightGrassRock - mTransitionThreshold;
         float mHeightGrassRockMax = mHeightGrassRock + mTransitionThreshold;
