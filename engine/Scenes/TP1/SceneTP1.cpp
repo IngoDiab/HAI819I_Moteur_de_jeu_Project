@@ -1,5 +1,6 @@
 #include "SceneTP1.h"
 #include "engine/Landscape/Landscape/Landscape.h"
+#include "engine/Skyboxes/Skybox/Skybox.h"
 #include "engine/Inputs/InputManager/InputManager.h"
 #include "engine/Camera/EditorCamera/EditorCamera.h"
 #include "engine/Camera/OrbitalCamera/OrbitalCamera.h"
@@ -8,8 +9,9 @@
 
 void SceneTP1::LoadScene()
 {
-    mSkybox = new Skybox();
-    mSkybox->ChangeSkybox("Textures/Skybox/Base/", ".jpg");
+    Skybox* _skybox = Skybox::Instance();
+    _skybox->ChangeSkybox("Textures/Skybox/Base/", ".jpg");
+
     mLandscape = CreateLandscape();
     InitEditorCamera();
     InitOrbitalCamera(mLandscape);
@@ -28,7 +30,7 @@ Landscape* SceneTP1::CreateLandscape()
 
 void SceneTP1::InitEditorCamera() const
 {
-   EditorCamera::Instance()->SetPosition(vec3(0,100,-200));
+   EditorCamera::Instance()->SetPosition(vec3(0,0,0));
 }
 
 void SceneTP1::InitOrbitalCamera(Landscape* _landscape)

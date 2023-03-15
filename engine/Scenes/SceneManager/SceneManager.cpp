@@ -1,6 +1,7 @@
 #include "SceneManager.h"
 #include <iostream>
 #include "engine/Scenes/Scene/Scene.h"
+#include "engine/Skyboxes/Skybox/Skybox.h"
 #include "engine/Camera/Camera/Camera.h"
 #include "engine/Windows/Window.h"
 #include <GL/glew.h>
@@ -30,7 +31,7 @@ void SceneManager::ProcessCurrentScene(Camera* _activeCamera, Window* _window, c
     {
         if(!mCurrentScene) throw CustomException("No current Scene.");
         _window->EnableDepth(false);
-        mCurrentScene->DrawSkybox(_activeCamera);
+        ((Skybox*)Skybox::Instance())->Draw(_activeCamera);
         _window->EnableDepth(true);
         Renderer::Instance()->Draw3DAxis();
         // _window->PolygonMode(GL_FRONT_AND_BACK, GL_LINE);

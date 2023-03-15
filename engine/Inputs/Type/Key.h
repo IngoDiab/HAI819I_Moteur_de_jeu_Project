@@ -5,7 +5,6 @@
 
 class Key
 {
-public:
     int mKeyID = 0;
     ACTION_TYPE mType = ACTION_TYPE::NONE;
     Object* mInstanceCalling = nullptr;
@@ -14,14 +13,22 @@ public:
     bool mbIsBeingPressed = false;
     bool mbIsReleased = false;
 
+public:
+    int GetKeyID() const {return mKeyID;}
+
     bool HasNotBeenPressed() { return !mbIsPressedFirstFrame && !mbIsBeingPressed && !mbIsReleased;}
     bool HasBeenPressedOnce() { return mbIsPressedFirstFrame && !mbIsBeingPressed && !mbIsReleased;}
     bool HasBeenPressedAtLeastOnce() { return !mbIsReleased && (mbIsPressedFirstFrame || mbIsBeingPressed);}
     bool HasAlreadyBeenReleased() { return !mbIsPressedFirstFrame && !mbIsBeingPressed && mbIsReleased;}
 
+    //bool InstanceCallingHasBeenDeleted() {return !mInstanceCalling;}
+    bool InstanceCallingRelativeToScene() {return mInstanceCalling ? mInstanceCalling->GetDurability() == DURABILITY::SCENE : true;}
+
+public:
     Key(){}
     Key(const int _key, const ACTION_TYPE _type, Object* _instanceCalling, void* (Object::*_callback)(bool)) : mKeyID(_key), mType(_type), mInstanceCalling(_instanceCalling), mCallback(_callback){}
 
+public:
     void FirstTimePress() {mbIsPressedFirstFrame = true;}
     void HoldKey() 
     {

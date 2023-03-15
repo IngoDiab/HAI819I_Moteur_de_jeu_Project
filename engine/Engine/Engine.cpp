@@ -16,7 +16,9 @@ void Engine::Initialize(const int _widthWindow, const int _heightWindow, const s
     mMainWindow->ActivateInput(GLFW_STICKY_KEYS, GL_TRUE);
     mMainWindow->EnableDepth(true);
 
-    mEditorCamera = mObjectManager.Create<EditorCamera>();
+    mSkybox = new Skybox();
+
+    mEditorCamera = mObjectManager.Create<EditorCamera>(vec3(0), vec3(0), vec3(1), nullptr, DURABILITY::PERSISTENT);
     mEditorCamera->Initialize();
     ResetCameraToEditor();
 

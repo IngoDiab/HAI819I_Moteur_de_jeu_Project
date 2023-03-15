@@ -25,3 +25,9 @@ void MeshComponent::CleanRessources()
     delete mMesh;
     delete mMaterial;
 }
+
+void MeshComponent::ChangeTextureMaterial(const int _textureSlot, const string& _texturePath)
+{
+    if(!mMaterial) return;
+    mMaterial->LoadTexture(_textureSlot, _texturePath);
+}

@@ -3,6 +3,7 @@
 using namespace std;
 
 #include "engine/Camera/EditorCamera/EditorCamera.h"
+#include "engine/Skyboxes/Skybox/Skybox.h"
 #include "engine/Inputs/InputManager/InputManager.h"
 #include "engine/Inputs/MouseManager/MouseManager.h"
 #include "engine/Objects/ObjectManager/ObjectManager.h"
@@ -26,6 +27,7 @@ class Engine final : public Singleton<Engine>
     VAO mMainVAO;
 
     EditorCamera* mEditorCamera = nullptr;
+    Skybox* mSkybox = nullptr;
     InputManager mInputManager;
     MouseManager mMouseManager;
     ObjectManager mObjectManager;

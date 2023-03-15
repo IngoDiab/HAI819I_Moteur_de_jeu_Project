@@ -5,6 +5,10 @@
 #include <iostream>
 using namespace std;
 
+//TODO Keyboard QWERTY->AZERTY
+//TODO Renderer unload only scene
+//TODO ShaderManager unload only scene
+
 int main(int argc, char** argv)
 {
     Engine _engine = Engine();

@@ -15,8 +15,6 @@ SkyboxMaterial::SkyboxMaterial(const string& _vertexShader, const string& _fragS
 void SkyboxMaterial::Initialize()
 {
     if(mPathTextures == "" || mFormat == "") return;
-    const string _path = "Textures/Skybox/Base/";
-    const string _format = ".jpg";
     vector<string> _texturesCubemapPaths
     {
         mPathTextures + "right" + mFormat,
@@ -35,7 +33,7 @@ void SkyboxMaterial::UseMaterial(const int _typeTexture, const mat4& _model, con
     Material::UseMaterial(_typeTexture, _model, _viewSkybox, _proj);
 }
 
-void SkyboxMaterial::ChangeSkyboxTextures(const string& _path, const string& _format)
+void SkyboxMaterial::ChangeSkyboxTextures(const string _path, const string _format)
 {
     mPathTextures = _path;
     mFormat = _format;

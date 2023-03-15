@@ -8,8 +8,8 @@
       "args": [],
       "stopAtEntry": false,
       "externalConsole": false,
-      "cwd": "/home/e20170006735/MoteurJeux/TP1_code/TP1",
-      "program": "/home/e20170006735/MoteurJeux/TP1_code/TP1/build/Debug/outDebug",
+      "cwd": "/home/ingo/Bureau/MoteurJeux/TP1_code/engine",
+      "program": "/home/ingo/Bureau/MoteurJeux/TP1_code/build/engine",
       "MIMode": "gdb",
       "miDebuggerPath": "gdb",
       "setupCommands": [

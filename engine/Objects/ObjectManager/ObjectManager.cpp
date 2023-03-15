@@ -33,6 +33,18 @@ bool ObjectManager::Exist(GameObject* _object) const
     return false;
 }
 
+void ObjectManager::DeleteObjectsSpecificDurability(const DURABILITY _durability)
+{
+    vector<GameObject*> _GOToKeep;
+    for(GameObject* _object : mSceneGameObjects)
+    {   
+        if(!_object) continue;
+        if(_object->GetDurability() == _durability) delete _object;
+        else _GOToKeep.push_back(_object);
+    }
+    mSceneGameObjects = _GOToKeep;
+}
+
 void ObjectManager::DeleteObjects()
 {
     for(GameObject* _object : mSceneGameObjects)

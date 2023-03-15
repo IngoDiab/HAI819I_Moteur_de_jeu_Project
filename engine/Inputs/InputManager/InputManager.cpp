@@ -3,13 +3,32 @@
 
 #include "engine/Inputs/MouseManager/MouseManager.h"
 #include "engine/Objects/Object/Object.h"
-//TODO FIX QWERTY -> AZERTY
 
+void InputManager::DeleteObsoleteInputs()
+{
+    vector<Axis> _notObsoleteAxis;
+    for(Axis& _axis : mBindedAxis)
+    {
+        if(_axis.InstanceCallingRelativeToScene()) continue;
+        _notObsoleteAxis.push_back(_axis);
+    }
+    mBindedAxis = _notObsoleteAxis;
+
+    vector<Key> _notObsoleteKeys;
+    for(Key& _key : mBindedKeys)
+    {
+        if(_key.InstanceCallingRelativeToScene()) continue;
+        _notObsoleteKeys.push_back(_key);
+    }
+    mBindedKeys = _notObsoleteKeys;
+}
+
+//TODO FIX QWERTY -> AZERTY
 void InputManager::CheckStateAllKeys(GLFWwindow* _window)
 {
     for(Key& _key : mBindedKeys)
     {
-        const int _state = glfwGetKey(_window, _key.mKeyID) || glfwGetMouseButton(_window, _key.mKeyID);
+        const int _state = glfwGetKey(_window, _key.GetKeyID()) || glfwGetMouseButton(_window, _key.GetKeyID());
         switch (_state)
         {
         case GLFW_PRESS:
@@ -51,7 +70,6 @@ void InputManager::CheckStateAllAxis(GLFWwindow* _window)
             _axis.SetPositiveValue(glfwGetKey(_window, _pair.first));
             _axis.SetNegativeValue(-1*glfwGetKey(_window, _pair.second));
         }
-        //cout<<_positiveValue<<endl;
         _axis.ExecuteCallback();
     }
 }

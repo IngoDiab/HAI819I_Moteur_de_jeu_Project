@@ -1,7 +1,5 @@
 #include "GameObject.h"
 
-#include <algorithm>
-
 #include "engine/Engine/Engine.h"
 #include "engine/Scenes/Scene/Scene.h"
 #include "engine/Scenes/SceneManager/SceneManager.h"
@@ -10,7 +8,9 @@ GameObject::GameObject()
 {}
 
 GameObject::~GameObject()
-{}
+{
+    DeleteComponents();
+}
 
 GameObject::GameObject(const Transform& _transform) : mTransform(_transform)
 {}
@@ -105,6 +105,13 @@ void GameObject::DeleteChild(GameObject* _child)
 {
     if(HasChild(_child)) return;
     mChildren.erase(find(mChildren.begin(), mChildren.end(), _child));
+}
+
+void GameObject::DeleteComponents()
+{
+    for(Component* _component : mComponents)
+        if(_component) delete _component;
+    mComponents.clear();
 }
 
 void GameObject::RotateLocalAxisX(const float _rotate)

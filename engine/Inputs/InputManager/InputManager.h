@@ -14,6 +14,9 @@ class InputManager final : public Singleton<InputManager>
     vector<Axis> mBindedAxis = vector<Axis>();
 
 public:
+    void DeleteObsoleteInputs();
+
+public:
     void CheckStateAllKeys(GLFWwindow* _window);
     void CheckStateAllAxis(GLFWwindow* _window);
     bool CheckCustomAxis(Axis& _axis, const pair<int,int>& _pair);

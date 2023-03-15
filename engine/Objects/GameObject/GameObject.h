@@ -3,6 +3,8 @@
 #include <vector>
 using namespace std;
 
+#include <algorithm>
+
 #include "engine/Objects/Object/Object.h"
 #include "engine/Renderer/Renderer.h"
 #include "engine/Transform/Transform.h"
@@ -66,6 +68,7 @@ private:
     bool HasChild(GameObject* _child) const;
     void AddChildren(GameObject* _child);
     void DeleteChild(GameObject* _child);
+    void DeleteComponents();
 
 public:
     virtual void RotateLocalAxisX(const float _rotate);
@@ -79,6 +82,9 @@ public:
     //return first found T component
     template<typename T>
     T* GetComponent();
+
+    template<typename T>
+    void DeleteComponent();
 };
 
 template<typename T>
@@ -87,7 +93,11 @@ T* GameObject::AddComponent(const vec3& _position, const vec3& _rotation, const 
     T* _object = new T();
 
     Component* _component = dynamic_cast<Component*>(_object);
-    if(!_component) return nullptr;
+    if(!_component)
+    {
+        delete _object;
+        return nullptr;
+    }
     mComponents.push_back(_component);
     _component->SetOwner(this);
     _component->SetPosition(_position);
@@ -110,4 +120,16 @@ T* GameObject::GetComponent()
         return _castedComp;
     }
     return nullptr;
+}
+
+template<typename T>
+void GameObject::DeleteComponent()
+{
+    for(Component* _component : mComponents)
+    {
+        T* _castedComp = dynamic_cast<T*>(_component);
+        if(!_castedComp) continue;
+        mComponents.erase(find(mComponents.begin(), mComponents.end(), _component));
+        delete _component;
+    }
 }

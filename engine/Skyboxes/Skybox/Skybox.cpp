@@ -33,5 +33,5 @@ void Skybox::Draw(Camera* _renderingCamera)
 
 void Skybox::ChangeSkybox(const string& _path, const string& _format)
 {
-    mMaterial->ChangeSkyboxTextures(_path, _format);
+    if(mMaterial) mMaterial->ChangeSkyboxTextures(_path, _format);
 }

@@ -1,6 +1,6 @@
 #pragma once
 
-#include <vector>
+#include <vector> 
 using namespace std;
 
 #include "engine/Objects/Object/Object.h"
@@ -20,9 +20,13 @@ public:
     void SetPositiveValue(const float _value){mPositiveValue = _value;}
     void SetNegativeValue(const float _value){mNegativeValue = _value;}
 
+    //bool InstanceCallingHasBeenDeleted() {return !mInstanceCalling;}
+    bool InstanceCallingRelativeToScene() {return mInstanceCalling ? mInstanceCalling->GetDurability() == DURABILITY::SCENE : true;}
+
 public:
     Axis(){}
-    Axis(vector<pair<int,int>> _keysID, Object* _instanceCalling, void* (Object::*_callback)(float)) : mAxisID(_keysID), mInstanceCalling(_instanceCalling), mCallback(_callback){}
+    Axis(vector<pair<int,int>> _axisID, Object* _instanceCalling, void* (Object::*_callback)(float)) : mAxisID(_axisID), mInstanceCalling(_instanceCalling), mCallback(_callback){}
+
 
     void ExecuteCallback()
     {

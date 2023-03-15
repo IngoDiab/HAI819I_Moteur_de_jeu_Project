@@ -1,5 +1,6 @@
 #include "Scene.h"
 #include "engine/Camera/Camera/Camera.h"
+#include "engine/Inputs/InputManager/InputManager.h"
 
 Scene::~Scene()
 {
@@ -8,13 +9,17 @@ Scene::~Scene()
 
 void Scene::UnloadScene()
 {
-    ObjectManager* _objectManager = ObjectManager::Instance();   
-    _objectManager->DeleteObjects();
+    InputManager* _inputManager = InputManager::Instance();
+    _inputManager->DeleteObsoleteInputs();
 
     ShaderManager* _shaderManager = ShaderManager::Instance();
     _shaderManager->DeleteAllShaders();
 
-    delete mSkybox;
+    Renderer* _renderer = Renderer::Instance();
+    _renderer->DeleteRenderables();
+
+    ObjectManager* _objectManager = ObjectManager::Instance();   
+    _objectManager->DeleteObjectsSpecificDurability(DURABILITY::SCENE);
 }
 
 void Scene::Update(const float _deltaTime)
@@ -29,9 +34,4 @@ void Scene::LateUpdate(const float _deltaTime)
     ObjectManager* _objectManager = ObjectManager::Instance();
     const float _sceneDeltaTime = _deltaTime*mTickSpeed;
     _objectManager->TickLateObjects(_sceneDeltaTime);
-}
-
-void Scene::DrawSkybox(Camera* _camera)
-{
-    if(mSkybox) mSkybox->Draw(_camera);
 }

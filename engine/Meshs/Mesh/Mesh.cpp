@@ -10,6 +10,11 @@ Mesh::Mesh()
 
 }
 
+Mesh::~Mesh()
+{
+    
+}
+
 Mesh::Mesh(const vector<vec3>& _positions, const vector<vec2>& _uvs, const vector<unsigned short>& _indices, const std::vector<Triangle>& _triangles) : mPositions(_positions), mUVs(_uvs), mIndices(_indices), mTriangles(_triangles)
 {
     RefreshVBOData(VERTEX_ATTRIBUTE::VERTEX_POSITION);

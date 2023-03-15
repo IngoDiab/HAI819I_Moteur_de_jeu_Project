@@ -126,12 +126,8 @@ add_executable(engine
 	
 	engine/Planets/Planet/Planet.h
 	engine/Planets/Planet/Planet.cpp
-	engine/Planets/Material/EarthMaterial/EarthMaterial.h
-	engine/Planets/Material/EarthMaterial/EarthMaterial.cpp
-	engine/Planets/Material/MoonMaterial/MoonMaterial.h
-	engine/Planets/Material/MoonMaterial/MoonMaterial.cpp
-	engine/Planets/Material/SunMaterial/SunMaterial.h
-	engine/Planets/Material/SunMaterial/SunMaterial.cpp
+	engine/Planets/Material/PlanetMaterial.h
+	engine/Planets/Material/PlanetMaterial.cpp
 	
 	engine/Renderer/Renderer.h
 	engine/Renderer/Renderer.cpp

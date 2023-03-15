@@ -9,10 +9,10 @@ class Camera;
 
 class MeshComponent : public Component, public IRenderable
 {
-    
 public:
     virtual void Render(Camera* _renderingCamera) override;
     virtual void CleanRessources() override;
+    virtual void ChangeTextureMaterial(const int _textureSlot, const string& _texturePath);
 
 public:
     template<typename T>

@@ -3,7 +3,6 @@
 
 SkyboxShaderHandler::SkyboxShaderHandler(const string& _vertexShader, const string& _fragShader) : ShaderHandler(_vertexShader,_fragShader)
 {
-
 }
 
 void SkyboxShaderHandler::Initialize()

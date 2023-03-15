@@ -47,6 +47,7 @@ protected:
 
 public:
     Mesh();
+    virtual ~Mesh();
     Mesh(const vector<vec3>& _positions, const vector<vec2>& _uvs, const vector<unsigned short>& _indices, const std::vector<Triangle>& _triangles);
 
 protected:
