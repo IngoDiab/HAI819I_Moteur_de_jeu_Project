@@ -15,6 +15,7 @@ void Material::DeleteTexture(unsigned int& _texture)
 
 void Material::UseMaterial(const int _typeTexture, const mat4& _model, const mat4& _view, const mat4& _proj)
 {
+    mShader->SendLights();
     mShader->SendMVP(_model, _view, _proj);
     for(int _textureSlot = 0; _textureSlot<16; ++_textureSlot)
         mShader->SendTexture(_typeTexture, _textureSlot, mTextures[_textureSlot]);

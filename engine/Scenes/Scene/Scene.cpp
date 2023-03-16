@@ -1,6 +1,8 @@
 #include "Scene.h"
 #include "engine/Camera/Camera/Camera.h"
 #include "engine/Inputs/InputManager/InputManager.h"
+#include "engine/Lights/LightManager/LightManager.h"
+#include "engine/Lights/Light/Light.h"
 
 Scene::~Scene()
 {
@@ -20,6 +22,9 @@ void Scene::UnloadScene()
 
     ObjectManager* _objectManager = ObjectManager::Instance();   
     _objectManager->DeleteObjectsSpecificDurability(DURABILITY::SCENE);
+
+    LightManager* _lightManager = LightManager::Instance();
+    _lightManager->DeleteLightsSpecificDurability(DURABILITY::SCENE);
 }
 
 void Scene::Update(const float _deltaTime)

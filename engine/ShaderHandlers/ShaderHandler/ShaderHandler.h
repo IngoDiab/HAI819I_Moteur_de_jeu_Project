@@ -29,6 +29,8 @@ public:
 
     virtual void SendMVP(const mat4& _model, const mat4& _view, const mat4& _proj);
 
+    virtual void SendLights(){}
+
     virtual void SendTexture(int _typeTexture, int _offsetSlot, int _texture);
     virtual void GetTextureLocation(const int _slotTexture, const string& _nameLocation);
 

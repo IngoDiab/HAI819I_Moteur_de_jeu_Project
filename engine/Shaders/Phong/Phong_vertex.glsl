@@ -8,10 +8,12 @@ uniform mat4 view;
 uniform mat4 projection;
 
 out vec2 o_uv;
+out vec3 o_pos;
 
 void main()
 {
         gl_Position = projection * view * model * vec4(vertices_position_modelspace,1);
         o_uv = vertices_uv_modelspace;
+        o_pos = (model * vec4(vertices_position_modelspace,1)).xyz;
 }
 

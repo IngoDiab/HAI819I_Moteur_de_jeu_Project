@@ -34,6 +34,7 @@ class Engine final : public Singleton<Engine>
     Renderer mRenderer;
     ShaderManager mShaderManager;
     SceneManager mSceneManager;
+    LightManager mLightManager;
 
 public:
     float DeltaTime() const {return mDeltaTime;}

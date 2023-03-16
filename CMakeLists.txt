@@ -105,6 +105,11 @@ add_executable(engine
 	engine/Landscape/Shader/Landscape_vertex.glsl
 	engine/Landscape/ShaderHandler/LandscapeShaderHandler.h
 	engine/Landscape/ShaderHandler/LandscapeShaderHandler.cpp
+
+	engine/Lights/Light/Light.h
+	engine/Lights/Light/Light.cpp
+	engine/Lights/LightManager/LightManager.h
+	engine/Lights/LightManager/LightManager.cpp
 	
 	engine/Materials/Material.h
 	engine/Materials/Material.cpp

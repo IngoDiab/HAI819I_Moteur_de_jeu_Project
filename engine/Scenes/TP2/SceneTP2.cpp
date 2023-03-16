@@ -5,15 +5,23 @@
 #include "engine/Components/MeshComponent/MeshComponent.h"
 #include "engine/Planets/Material/PlanetMaterial.h"
 
+
 void SceneTP2::LoadScene()
 {
     Skybox* _skybox = Skybox::Instance();
     _skybox->ChangeSkybox("Textures/Skybox/Space4K/", ".png");
 
     ObjectManager* _objectManager = ObjectManager::Instance();
+    
+    Light* _sunLight = _objectManager->Create<Light>(vec3(0), vec3(0), vec3(10));
+    _sunLight->SetColor(vec3(1,1,0.5));
+    _sunLight->SetIntensity(1);
+    _sunLight->SetEnabled(true);
+
     Planet* _sun = _objectManager->Create<Planet>(vec3(0), vec3(0), vec3(10));
     _sun->GetMeshComponent()->CreateMaterial<PlanetMaterial>();
     _sun->GetMeshComponent()->ChangeTextureMaterial(0, "Textures/2D/sun.jpg");
+
 
     Planet* _earth = _objectManager->Create<Planet>(vec3(25), vec3(0,0,23.44f), vec3(.5), _sun);
     _earth->GetMeshComponent()->CreateMaterial<PlanetMaterial>();
