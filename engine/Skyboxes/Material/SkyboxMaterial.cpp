@@ -1,41 +1,40 @@
 #include "SkyboxMaterial.h"
 #include "engine/Skyboxes/ShaderHandler/SkyboxShaderHandler.h"
-#include <iostream>
-using namespace std;
 
 SkyboxMaterial::SkyboxMaterial(){}
 
 SkyboxMaterial::SkyboxMaterial(const string& _vertexShader, const string& _fragShader)
 {
-    SkyboxShaderHandler* _shaderHandler = new SkyboxShaderHandler(_vertexShader, _fragShader);
-    _shaderHandler->Initialize();
-    SetShader(_shaderHandler);
+    mShaderHandler = new SkyboxShaderHandler(_vertexShader, _fragShader);
+    mShaderHandler->Initialize();
+    mShader = mShaderHandler;
 }
 
-void SkyboxMaterial::Initialize()
-{
-    if(mPathTextures == "" || mFormat == "") return;
-    vector<string> _texturesCubemapPaths
-    {
-        mPathTextures + "right" + mFormat,
-        mPathTextures + "left" + mFormat,
-        mPathTextures + "top" + mFormat,
-        mPathTextures + "bottom" + mFormat,
-        mPathTextures + "front" + mFormat,
-        mPathTextures + "back" + mFormat,
-    };
-    LoadCubemapTexture(0, _texturesCubemapPaths);
-}
-
-void SkyboxMaterial::UseMaterial(const int _typeTexture, const mat4& _model, const mat4& _view, const mat4& _proj)
+void SkyboxMaterial::UseMaterial(const mat4& _model, const mat4& _view, const mat4& _proj)
 {
     glm::mat4 _viewSkybox = glm::mat4(glm::mat3(_view)); 
-    Material::UseMaterial(_typeTexture, _model, _viewSkybox, _proj);
+    BaseMaterial::UseMaterial(_model, _viewSkybox, _proj);
+
+    mShaderHandler->SendTexture(GL_TEXTURE_CUBE_MAP, 0, mCubemap, mShaderHandler->GetCubemapHandler());
 }
 
 void SkyboxMaterial::ChangeSkyboxTextures(const string _path, const string _format)
 {
-    mPathTextures = _path;
-    mFormat = _format;
-    Initialize();
+    if(_path == "" || _format == "") return;
+    vector<string> _texturesCubemapPaths
+    {
+        _path + "right" + _format,
+        _path + "left" + _format,
+        _path + "top" + _format,
+        _path + "bottom" + _format,
+        _path + "front" + _format,
+        _path + "back" + _format,
+    };
+    LoadCubemapTexture(_texturesCubemapPaths);
+}
+
+void SkyboxMaterial::LoadCubemapTexture(const vector<string>& _texturePaths)
+{
+    DeleteTexture(mCubemap);
+    mCubemap = loadTextureCubeMap2DFromFilePath(_texturePaths);
 }

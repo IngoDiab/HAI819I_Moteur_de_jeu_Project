@@ -7,16 +7,21 @@ using namespace std;
 #include <glm/glm.hpp>
 using namespace glm;
 
-class ShaderHandler
+#include "engine/ShaderHandlers/BaseShaderHandler/BaseShaderHandler.h"
+
+class ShaderHandler : public BaseShaderHandler
 {
 protected:
-    int mShaderHandler;
-    int mModelHandler;
-    int mViewHandler;
-    int mProjectionHandler;
+    int mIsUsingNormalMapHandler = false;
+    vector<int> mColorsHandlers = vector<int>(3);
+    vector<int> mTexturesHandlers = vector<int>(7);
+    vector<int> mCoeffsHandlers = vector<int>(7);
 
-    vector<int> mTexturesHandlers = vector<int>(16);
-    map<string, int> mNumericalHandlers = map<string, int>();
+public:
+    int GetIsUsingNormalMapHandler(){return mIsUsingNormalMapHandler;}
+    vector<int> GetColorHandlers() const {return mColorsHandlers;}
+    vector<int> GetTexturesHandlers() const {return mTexturesHandlers;}
+    vector<int> GetCoeffsHandlers() const {return mCoeffsHandlers;}
 
 public:
     ShaderHandler(const string& _vertexShader, const string& _fragShader);
@@ -26,15 +31,4 @@ public:
 
 public:
     virtual void Initialize();
-
-    virtual void SendMVP(const mat4& _model, const mat4& _view, const mat4& _proj);
-
-    virtual void SendLights(){}
-
-    virtual void SendTexture(int _typeTexture, int _offsetSlot, int _texture);
-    virtual void GetTextureLocation(const int _slotTexture, const string& _nameLocation);
-
-    virtual void GetNumericalLocation(const string& _nameLocation);
-    virtual void SendFloat(const string& _nameLocation, float _value);
-    virtual void SendInt(const string& _nameLocation, int _value);
 };

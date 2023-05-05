@@ -9,14 +9,12 @@ Transform::Transform()
 {
     mMesh = new TransformMesh();
     mMaterial = new TransformMaterial(TRANSFORM_VERTEX, TRANSFORM_FRAG);
-    mMaterial->Initialize();
 }
 
 Transform::Transform(const vec3& _position, const vec3& _rotation, const vec3& _scale) : mTransformData(TransformData(_position, _rotation, _scale))
 {
     mMesh = new TransformMesh();
     mMaterial = new TransformMaterial(TRANSFORM_VERTEX, TRANSFORM_FRAG);
-    mMaterial->Initialize();
 }
 
 Transform::~Transform()
@@ -90,7 +88,7 @@ void Transform::Draw3DAxis()
     //Use Material
     glUseProgram(mMaterial->GetShader()->GetShaderHandler());
     const mat4 _transformModel = GetWorldTransRotaMatrix() * scale(mat4(1.0), mScaleMesh);
-    mMaterial->UseMaterial(GL_TEXTURE_2D, _transformModel, _viewMatrix, _projMatrix);
+    mMaterial->UseMaterial(_transformModel, _viewMatrix, _projMatrix);
 
     //Draw
     mMesh->DrawMesh();

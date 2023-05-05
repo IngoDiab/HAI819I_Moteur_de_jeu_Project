@@ -76,10 +76,6 @@ public:
     mat4 GetWorldRotationMatrix(){return mWorldRotationMatrix;}
     mat4 GetWorldScaleMatrix(){return mWorldlScaleMatrix;}
 
-    mat4 GetLocalTranslationMatrix(){return mLocalTranslationMatrix;}
-    mat4 GetLocalRotationMatrix(){return mLocalRotationMatrix;}
-    mat4 GetLocalScaleMatrix(){return mLocalScaleMatrix;}
-
     void SetParentTransform(Transform* _parent) {mTransformParent = _parent;}
     void SetDrawMeshAxis(bool _draw) {mDrawMeshAxis = _draw;}
 

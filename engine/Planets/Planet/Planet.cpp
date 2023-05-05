@@ -7,6 +7,7 @@ Planet::Planet()
 {
     mMeshComponent = AddComponent<MeshComponent>();
     mMeshComponent->CreateMesh<Sphere>();
+    mMeshComponent->CreateMaterial<Material>(PHONG_VERTEX, PHONG_FRAG);
 }
 
 void Planet::Update(const float _deltaTime)

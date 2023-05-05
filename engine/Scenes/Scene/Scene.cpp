@@ -1,8 +1,8 @@
 #include "Scene.h"
 #include "engine/Camera/Camera/Camera.h"
 #include "engine/Inputs/InputManager/InputManager.h"
+#include "engine/Physic/PhysicManager/PhysicManager.h"
 #include "engine/Lights/LightManager/LightManager.h"
-#include "engine/Lights/Light/Light.h"
 
 Scene::~Scene()
 {
@@ -17,14 +17,17 @@ void Scene::UnloadScene()
     ShaderManager* _shaderManager = ShaderManager::Instance();
     _shaderManager->DeleteAllShaders();
 
-    Renderer* _renderer = Renderer::Instance();
-    _renderer->DeleteRenderables();
+    // Renderer* _renderer = Renderer::Instance();
+    // _renderer->DeleteRenderables();
 
     ObjectManager* _objectManager = ObjectManager::Instance();   
     _objectManager->DeleteObjectsSpecificDurability(DURABILITY::SCENE);
 
-    LightManager* _lightManager = LightManager::Instance();
-    _lightManager->DeleteLightsSpecificDurability(DURABILITY::SCENE);
+    PhysicManager* _physicManager = PhysicManager::Instance();
+    _physicManager->DeletePhysicComponents();
+
+    // LightManager* _lightManager = LightManager::Instance();
+    // _lightManager->DeleteLightsSpecificDurability(DURABILITY::SCENE);
 }
 
 void Scene::Update(const float _deltaTime)

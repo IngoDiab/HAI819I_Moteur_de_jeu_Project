@@ -9,21 +9,21 @@ using namespace glm;
 using namespace std;
 
 #include "engine/Utils/Singleton/Singleton.h"
-#include "engine/Lights/Light/Light.h"
+#include "engine/Lights/PointLight/PointLight.h"
 
 class LightManager final : public Singleton<LightManager>
 {
 protected:
-	vector<Light*> mSceneLights = vector<Light*>();
+	vector<PointLight*> mSceneLights = vector<PointLight*>();
 
 public:
-	void AddLight(Light* _light);
-	void RemoveLight(Light* _light);
-
-	bool Exists(Light* _light) const;
-
-	vector<Light*> GetLights() {return mSceneLights;}
+	vector<PointLight*> GetLights() {return mSceneLights;}
 
 public:
-	void DeleteLightsSpecificDurability(const DURABILITY _durability);
+	void AddLight(PointLight* _light);
+	void RemoveLight(PointLight* _light);
+	bool Exists(PointLight* _light) const;
+
+// public:
+// 	void DeleteLightsSpecificDurability(const DURABILITY _durability);
 };

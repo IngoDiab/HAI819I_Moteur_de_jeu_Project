@@ -36,6 +36,7 @@ include_directories(
 	external/glfw-3.1.2/include/
 	external/glm-0.9.7.1/
 	external/glew-1.13.0/include/
+	external/assimp/include/
 	.
 )
 
@@ -66,6 +67,8 @@ add_executable(engine
 	common/vboindexer.cpp
 	common/vboindexer.hpp
 	
+	engine/Buffers/FBO/FBO.h
+	engine/Buffers/FBO/FBO.cpp
 	engine/Buffers/VAO/VAO.h
 	engine/Buffers/VAO/VAO.cpp
 	engine/Buffers/VBO/VBO.h
@@ -78,6 +81,9 @@ add_executable(engine
 	engine/Camera/OrbitalCamera/OrbitalCamera.h
 	engine/Camera/OrbitalCamera/OrbitalCamera.cpp
 	
+	engine/Character/Character.h
+	engine/Character/Character.cpp
+	
 	engine/Components/Component/Component.h
 	engine/Components/Component/Component.cpp
 	engine/Components/MeshComponent/MeshComponent.h
@@ -85,6 +91,8 @@ add_executable(engine
 	
 	engine/Engine/Engine.h
 	engine/Engine/Engine.cpp
+	
+	engine/FilesPath/FilesPath.h
 	
 	engine/Inputs/InputManager/InputManager.h
 	engine/Inputs/InputManager/InputManager.cpp
@@ -105,12 +113,14 @@ add_executable(engine
 	engine/Landscape/Shader/Landscape_vertex.glsl
 	engine/Landscape/ShaderHandler/LandscapeShaderHandler.h
 	engine/Landscape/ShaderHandler/LandscapeShaderHandler.cpp
-
-	engine/Lights/Light/Light.h
-	engine/Lights/Light/Light.cpp
+	
+	engine/Lights/PointLight/PointLight.h
+	engine/Lights/PointLight/PointLight.cpp
 	engine/Lights/LightManager/LightManager.h
 	engine/Lights/LightManager/LightManager.cpp
 	
+	engine/Materials/BaseMaterial/BaseMaterial.h
+	engine/Materials/BaseMaterial/BaseMaterial.cpp
 	engine/Materials/Material.h
 	engine/Materials/Material.cpp
 	
@@ -129,10 +139,21 @@ add_executable(engine
 	engine/Objects/ObjectManager/ObjectManager.h
 	engine/Objects/ObjectManager/ObjectManager.cpp
 	
+	engine/Physic/Collider/Collider.h
+	engine/Physic/Collider/Collider.cpp
+	engine/Physic/BoxCollider/BoxCollider.h
+	engine/Physic/BoxCollider/BoxCollider.cpp
+	engine/Physic/SphereCollider/SphereCollider.h
+	engine/Physic/SphereCollider/SphereCollider.cpp
+	engine/Physic/CollisionData/CollisionData.h
+	engine/Physic/CollisionData/CollisionData.cpp
+	engine/Physic/PhysicComponent/PhysicComponent.h
+	engine/Physic/PhysicComponent/PhysicComponent.cpp
+	engine/Physic/PhysicManager/PhysicManager.h
+	engine/Physic/PhysicManager/PhysicManager.cpp
+	
 	engine/Planets/Planet/Planet.h
 	engine/Planets/Planet/Planet.cpp
-	engine/Planets/Material/PlanetMaterial.h
-	engine/Planets/Material/PlanetMaterial.cpp
 	
 	engine/Renderer/Renderer.h
 	engine/Renderer/Renderer.cpp
@@ -145,11 +166,15 @@ add_executable(engine
 	engine/Scenes/TP1/SceneTP1.cpp
 	engine/Scenes/TP2/SceneTP2.h
 	engine/Scenes/TP2/SceneTP2.cpp
+	engine/Scenes/TP3/SceneTP3.h
+	engine/Scenes/TP3/SceneTP3.cpp
+	engine/Scenes/TP4/SceneTP4.h
+	engine/Scenes/TP4/SceneTP4.cpp
 	
+	engine/ShaderHandlers/BaseShaderHandler/BaseShaderHandler.h
+	engine/ShaderHandlers/BaseShaderHandler/BaseShaderHandler.cpp
 	engine/ShaderHandlers/ShaderHandler/ShaderHandler.h
 	engine/ShaderHandlers/ShaderHandler/ShaderHandler.cpp
-	engine/ShaderHandlers/PhongShaderHandler/PhongShaderHandler.h
-	engine/ShaderHandlers/PhongShaderHandler/PhongShaderHandler.cpp
 	engine/ShaderHandlers/ShaderManager/ShaderManager.h
 	engine/ShaderHandlers/ShaderManager/ShaderManager.cpp
 	
@@ -173,7 +198,10 @@ add_executable(engine
 	engine/Transform/Shader/Transform_frag.glsl
 	engine/Transform/Shader/Transform_vertex.glsl
 	
+	engine/Utils/Printer/Printer.h
 	engine/Utils/Singleton/Singleton.h
+	engine/Utils/AssimpLoader/AssimpLoader.h
+	engine/Utils/AssimpLoader/AssimpLoader.cpp
 	engine/Utils/TextureLoader/TextureLoader.h
 	engine/Utils/TextureLoader/TextureLoader.cpp
 	engine/Utils/Interfaces/IMoving.h

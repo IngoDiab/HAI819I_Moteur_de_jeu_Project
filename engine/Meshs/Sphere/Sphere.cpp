@@ -5,7 +5,17 @@ Sphere::Sphere() : Mesh()
     CreateSphere();
 }
 
-void Sphere::CreateSphere(const bool& _generatePos, const bool& _generateUV, const bool& _generateIndices)
+Sphere::Sphere(const bool _generatePos, const bool _generateUV, const bool _generateIndices, const bool _generateNormales) : Mesh(), mNbVertexAzimut(20), mNbVertexElevation(20)
+{
+    CreateSphere(_generatePos, _generateUV, _generateIndices, _generateNormales);
+}
+
+Sphere::Sphere(const int _nbVertexAzimut, const int _nbVertexElevation) : mNbVertexAzimut(_nbVertexAzimut), mNbVertexElevation(_nbVertexElevation)
+{
+    CreateSphere();
+}
+
+void Sphere::CreateSphere(const bool _generatePos, const bool _generateUV, const bool _generateIndices, const bool _generateNormales)
 {
     if(_generatePos)
     {
@@ -23,6 +33,12 @@ void Sphere::CreateSphere(const bool& _generatePos, const bool& _generateUV, con
     {
         CreateIndices();
         RefreshVBOData(VERTEX_ATTRIBUTE::VERTEX_INDICES);
+    }
+
+    if(_generateNormales)
+    {
+        CreateVerticesNormales();
+        RefreshVBOData(VERTEX_ATTRIBUTE::VERTEX_NORMALE);
     }
 }
 
@@ -62,11 +78,51 @@ void Sphere::CreateIndices()
         {
             int _nextOnAzimut = _azimutIndex+1 >= mNbVertexAzimut ? 0 : _azimutIndex+1;
             mIndices.push_back(_azimutIndex*mNbVertexElevation + _elevationIndex);
-            mIndices.push_back(_nextOnAzimut*mNbVertexElevation + _elevationIndex+1);
             mIndices.push_back(_azimutIndex*mNbVertexElevation + _elevationIndex+1);
+            mIndices.push_back(_nextOnAzimut*mNbVertexElevation + _elevationIndex+1);
 
             mIndices.push_back(_azimutIndex*mNbVertexElevation + _elevationIndex);
-            mIndices.push_back(_nextOnAzimut*mNbVertexElevation + _elevationIndex);
             mIndices.push_back(_nextOnAzimut*mNbVertexElevation + _elevationIndex+1);
+            mIndices.push_back(_nextOnAzimut*mNbVertexElevation + _elevationIndex);
         }
+}
+
+void Sphere::CreateVerticesNormales()
+{
+    mNormales.clear();
+    mNormales.resize(mNbVertexAzimut * mNbVertexElevation);
+
+    vector<unsigned int> _neighboors = vector<unsigned int>(mPositions.size());
+    unsigned int _nbIndices = mIndices.size();
+    for(int i = 0; i < _nbIndices; i+=3)
+    {   
+        //Get Indices
+        unsigned int _index0 = mIndices[i];
+        unsigned int _index1 = mIndices[i+1];
+        unsigned int _index2 = mIndices[i+2];
+
+        //Increm. neighboors
+        ++_neighboors[_index0];
+        ++_neighboors[_index1];
+        ++_neighboors[_index2];
+
+        //Normale triangle
+        vec3 _pos0 = mPositions[_index0];
+        vec3 _pos1 = mPositions[_index1];
+        vec3 _pos2 = mPositions[_index2];
+        vec3 _triangleNormales = normalize(cross(_pos2-_pos0, _pos1-_pos0));
+
+        //Add normal triangle
+        mNormales[_index0] += _triangleNormales;
+        mNormales[_index1] += _triangleNormales;
+        mNormales[_index2] += _triangleNormales;
+    }
+
+    //Get Normale per vertex
+    unsigned int _nbVertex = mNormales.size();
+    for(int i = 0; i < _nbVertex; ++i)
+    {   
+        mNormales[i] /= (float)_neighboors[i];
+        mNormales[i] = normalize(mNormales[i]);
+    }
 }

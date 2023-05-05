@@ -1,9 +1,6 @@
 #include "MouseManager.h"
 #include <GLFW/glfw3.h>
 
-#include <iostream>
-using namespace std;
-
 void MouseManager::RefreshMousePosition(GLFWwindow* _window)
 {
     double _newXPos, _newYPos;

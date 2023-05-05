@@ -4,9 +4,9 @@ in vec3 o_position;
 
 out vec4 FragColor;
 
-uniform samplerCube skybox;
+uniform samplerCube mCubemap;
 
 void main() 
 {
-    FragColor = texture(skybox, o_position);
+    FragColor = texture(mCubemap, o_position);
 }

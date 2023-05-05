@@ -32,7 +32,8 @@ public:
     Scene* GetCurrentScene() {return mCurrentScene;}
 
 public:
-    void ProcessCurrentScene(Camera* _activeCamera, Window* _window, const float& _deltaTime);
+    void UpdateCurrentScene(const float& _deltaTime);
+    void DrawCurrentScene(Camera* _activeCamera, Window* _window);
     void AddScene(const string& _name, Scene* const _scene);
     void LoadScene(const string& _name);
     void UnloadCurrentScene();

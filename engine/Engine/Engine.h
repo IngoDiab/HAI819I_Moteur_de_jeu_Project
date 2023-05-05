@@ -10,6 +10,8 @@ using namespace std;
 #include "engine/Renderer/Renderer.h"
 #include "engine/ShaderHandlers/ShaderManager/ShaderManager.h"
 #include "engine/Scenes/SceneManager/SceneManager.h"
+#include "engine/Lights/LightManager/LightManager.h"
+#include "engine/Physic/PhysicManager/PhysicManager.h"
 #include "engine/Utils/Singleton/Singleton.h"
 #include "engine/Buffers/VAO/VAO.h"
 
@@ -35,6 +37,7 @@ class Engine final : public Singleton<Engine>
     ShaderManager mShaderManager;
     SceneManager mSceneManager;
     LightManager mLightManager;
+    PhysicManager mPhysicManager;
 
 public:
     float DeltaTime() const {return mDeltaTime;}
@@ -46,6 +49,7 @@ public:
 
 public:
     Engine();
+    ~Engine();
 
 public:
     void Initialize(const int _widthWindow, const int _heightWindow, const string& _nameWindow);

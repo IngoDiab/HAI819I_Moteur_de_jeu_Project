@@ -7,10 +7,10 @@ void Renderer::AddRenderable(IRenderable* _renderable)
     mRenderableObjects.push_back(_renderable);
 }
 
-void Renderer::DeleteRenderables()
-{
-    mRenderableObjects.clear();
-}
+// void Renderer::DeleteRenderables()
+// {
+//     mRenderableObjects.clear();
+// }
 
 void Renderer::DrawObjects(Camera* _camera)
 {

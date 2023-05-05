@@ -9,12 +9,19 @@
 Engine::Engine()
 {}
 
+Engine::~Engine()
+{
+    delete mSkybox;
+    delete mMainWindow;
+}
+
 void Engine::Initialize(const int _widthWindow, const int _heightWindow, const string& _nameWindow)
 {
     const vector<float> _colorBackground = vector<float>{0.8f, 0.8f, 0.8f, 1.0f};
     mMainWindow = new Window(_widthWindow, _heightWindow, _nameWindow.c_str(), NULL, NULL, _colorBackground);
     mMainWindow->ActivateInput(GLFW_STICKY_KEYS, GL_TRUE);
     mMainWindow->EnableDepth(true);
+    //mMainWindow->EnableCullFace(true);
 
     mSkybox = new Skybox();
 
@@ -36,7 +43,9 @@ void Engine::Run()
         mInputManager.CheckStateAllAxis(mMainWindow->GetWindow());
 
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-        mSceneManager.ProcessCurrentScene(mActiveCamera, mMainWindow, mDeltaTime);
+        mSceneManager.UpdateCurrentScene(mDeltaTime);
+        mPhysicManager.UpdatePhysic(mDeltaTime);
+        mSceneManager.DrawCurrentScene(mActiveCamera, mMainWindow);
 
         // Swap buffers
         glfwSwapBuffers(mMainWindow->GetWindow());

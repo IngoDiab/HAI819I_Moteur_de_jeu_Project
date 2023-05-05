@@ -34,7 +34,6 @@ GLuint loadTexture2DFromFilePath(const std::string& path) {
 	glGenerateMipmap(GL_TEXTURE_2D);
 	stbi_image_free(data);
 	setDefaultTexture2DParameters(texture);
-	glBindTexture(GL_TEXTURE_2D, 0);
 	return texture;
 }
 
@@ -58,7 +57,6 @@ GLuint loadTextureCubeMap2DFromFilePath(const std::vector<std::string>& path) {
 		stbi_image_free(data);
 	}
 	setDefaultTextureCubemapParameters(texture);
-	glBindTexture(GL_TEXTURE_CUBE_MAP, 0);
 	return texture;
 }
 

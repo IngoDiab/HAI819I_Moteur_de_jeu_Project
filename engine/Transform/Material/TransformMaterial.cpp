@@ -7,8 +7,3 @@ TransformMaterial::TransformMaterial(const string& _vertexShader, const string& 
     _shaderHandler->Initialize();
     SetShader(_shaderHandler);
 }
-
-void TransformMaterial::Initialize()
-{
-    
-}

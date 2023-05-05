@@ -1,6 +1,7 @@
 #pragma once
 
 #include <vector>
+#include <string>
 using namespace std;
 
 #include <glm/glm.hpp>
@@ -12,8 +13,8 @@ enum class VERTEX_ATTRIBUTE
 {
     VERTEX_POSITION = 0,
     VERTEX_UVS = 1,
-    VERTEX_INDICES = 2,
-    //VERTEX_TRIANGLES = 3 //(?)
+    VERTEX_NORMALE = 2,
+    VERTEX_INDICES = 3
 };
 
 struct Triangle
@@ -33,6 +34,8 @@ struct Triangle
 
 class Mesh
 {
+    friend class AssimpLoader;
+    
 protected:
     vector<vec3> mPositions = vector<vec3>();
     VBO mPositionVBO = VBO(GL_ARRAY_BUFFER);
@@ -40,10 +43,17 @@ protected:
     vector<vec2> mUVs = vector<vec2>();
     VBO mUVsVBO = VBO(GL_ARRAY_BUFFER);
 
+    vector<vec3> mNormales = vector<vec3>();
+    VBO mNormalVBO = VBO(GL_ARRAY_BUFFER);
+
     vector<unsigned short> mIndices = vector<unsigned short>();
     VBO mIndicesVBO = VBO(GL_ELEMENT_ARRAY_BUFFER);
 
     std::vector<Triangle> mTriangles;
+
+public:
+    vector<vec3> GetPositionsVertices() const {return mPositions;}
+    void SetPositionsVertices(const vector<vec3>& _positions) {mPositions = _positions; RefreshVBOData(VERTEX_ATTRIBUTE::VERTEX_POSITION);}
 
 public:
     Mesh();
@@ -53,9 +63,11 @@ public:
 protected:
     void RefreshVBOData(const VERTEX_ATTRIBUTE _vbo);
 
-    virtual void CreateVerticesPositions() = 0;
-    virtual void CreateVerticesUVs() = 0;
-    virtual void CreateIndices() = 0;
+    void ClearMeshBuffers();
+    virtual void CreateVerticesPositions();
+    virtual void CreateVerticesUVs();
+    virtual void CreateIndices();
+    virtual void CreateVerticesNormales();
 
 public:
     void DrawMesh();

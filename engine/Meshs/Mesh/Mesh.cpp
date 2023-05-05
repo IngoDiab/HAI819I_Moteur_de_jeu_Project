@@ -19,6 +19,7 @@ Mesh::Mesh(const vector<vec3>& _positions, const vector<vec2>& _uvs, const vecto
 {
     RefreshVBOData(VERTEX_ATTRIBUTE::VERTEX_POSITION);
     RefreshVBOData(VERTEX_ATTRIBUTE::VERTEX_UVS);
+    RefreshVBOData(VERTEX_ATTRIBUTE::VERTEX_NORMALE);
     RefreshVBOData(VERTEX_ATTRIBUTE::VERTEX_INDICES);
 }
 
@@ -34,6 +35,9 @@ void Mesh::RefreshVBOData(const VERTEX_ATTRIBUTE _vbo)
         mUVsVBO.CopyDataToVBO(mUVs);
         break;
 
+    case VERTEX_ATTRIBUTE::VERTEX_NORMALE:
+        mNormalVBO.CopyDataToVBO(mNormales);
+
     case VERTEX_ATTRIBUTE::VERTEX_INDICES:
         mIndicesVBO.CopyDataToVBO(mIndices);
         break;
@@ -43,9 +47,39 @@ void Mesh::RefreshVBOData(const VERTEX_ATTRIBUTE _vbo)
     }
 }
 
+void Mesh::ClearMeshBuffers()
+{
+    mPositions.clear();
+    mUVs.clear();
+    mNormales.clear();
+    mIndices.clear();
+}
+
+void Mesh::CreateVerticesPositions()
+{
+
+}
+
+void Mesh::CreateVerticesUVs()
+{
+
+}
+
+void Mesh::CreateIndices()
+{
+
+}
+
+
+void Mesh::CreateVerticesNormales()
+{
+    
+}
+
 void Mesh::DrawMesh()
 {
     mPositionVBO.DrawVBO(0, 3, GL_FLOAT);
     mUVsVBO.DrawVBO(1, 2, GL_FLOAT);
+    mNormalVBO.DrawVBO(2, 3, GL_FLOAT);
     mIndicesVBO.DrawVBOIndices(GL_TRIANGLES, mIndices.size());
 }

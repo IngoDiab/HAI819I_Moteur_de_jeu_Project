@@ -16,8 +16,6 @@ void ObjectManager::TickObjects(const float _deltaTime)
 {
     for(GameObject* _object : mSceneGameObjects)
         _object->Update(_deltaTime*_object->GetTickSpeed());
-    for(GameObject* _object : mSceneGameObjects)
-        _object->UpdateModelMatrix();
 }
 
 void ObjectManager::TickLateObjects(const float _deltaTime)

@@ -1,27 +1,20 @@
 #pragma once
+#include <map>
+using namespace std;
 
 class Mesh;
 class Camera;
-class Material;
+class BaseMaterial;
 
 class IRenderable
 {
-protected:
-    Mesh* mMesh = nullptr;
-    Material* mMaterial = nullptr;
-    bool mCanBeRendered = true;
+public:
+    virtual Mesh* GetMesh(int _index) = 0;
+    virtual BaseMaterial* GetRendererMaterial(int _index) = 0;
+    virtual bool CanBeRendered() const = 0;
 
 public:
-    Mesh* GetMesh(){return mMesh;}
-    void SetMesh(Mesh* const _mesh){mMesh = _mesh;}
-
-    Material* GetMaterial(){return mMaterial;}
-    void SetMaterial(Material* const _material){mMaterial = _material;}
-
-    bool CanBeRendered() const {return mCanBeRendered;}
-    void SetCanBeRendered(const bool _canBeRendered) {mCanBeRendered = _canBeRendered;}
-
-public:
+    virtual void ChangeMeshByDistance(Camera* _renderingCamera, float _threshold) = 0;
     virtual void Render(Camera* _renderingCamera) = 0;
     virtual void CleanRessources() = 0;
 };

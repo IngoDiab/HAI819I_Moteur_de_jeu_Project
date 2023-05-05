@@ -1,8 +1,14 @@
 #pragma once
-#include "engine/ShaderHandlers/ShaderHandler/ShaderHandler.h"
+#include "engine/ShaderHandlers/BaseShaderHandler/BaseShaderHandler.h"
 
-class SkyboxShaderHandler : public ShaderHandler
+class SkyboxShaderHandler final : public BaseShaderHandler
 {
+public:
+    int mCubemapHandler;
+
+public:
+    int GetCubemapHandler() const {return mCubemapHandler;}
+
 public:
     SkyboxShaderHandler(const string& _vertexShader, const string& _fragShader);
 

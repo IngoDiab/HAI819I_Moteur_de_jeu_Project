@@ -8,10 +8,14 @@ class GameObject;
 class Component : public ITickable
 {
 protected:
-    GameObject* mOwner;
+    bool mIsDirty = true;
+    GameObject* mOwner = nullptr;
     Transform mTransform;
 
 public:
+    bool IsDirty() const {return mIsDirty;}
+    GameObject* GetOwner() const {return mOwner;}
+
     Transform* GetTransformInstance() {return &mTransform;}
     TransformData GetTransform() const {return mTransform.GetTransformData();}
 
@@ -26,6 +30,9 @@ public:
     vec3 GetWorldScale() const {return GetTransform().mWorldScale;}
     vec3 GetLocalScale() const {return GetTransform().mLocalScale;}
     void SetScale(const vec3& _scale) {mTransform.GetTransformData()->mLocalScale = _scale;}
+
+public:
+    virtual void PostConstructor();
 
 public:
     virtual void Update(const float _tickSpeed);

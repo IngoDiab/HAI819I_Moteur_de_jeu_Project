@@ -1,4 +1,5 @@
 #include "Skybox.h"
+#include "engine/FilesPath/FilesPath.h"
 #include "engine/Skyboxes/Mesh/SkyboxMesh.h"
 #include "engine/Skyboxes/ShaderHandler/SkyboxShaderHandler.h"
 #include "engine/Skyboxes/Material/SkyboxMaterial.h"
@@ -8,7 +9,6 @@ Skybox::Skybox()
 {
     mMesh = new SkyboxMesh();
     mMaterial = new SkyboxMaterial(SKYBOX_VERTEX, SKYBOX_FRAG);
-    mMaterial->Initialize();
 }
 
 Skybox::~Skybox()
@@ -25,7 +25,7 @@ void Skybox::Draw(Camera* _renderingCamera)
 
     //Use Material
     glUseProgram(mMaterial->GetShader()->GetShaderHandler());
-    mMaterial->UseMaterial(GL_TEXTURE_CUBE_MAP, mat4(1.0), _viewMatrix, _projMatrix);
+    mMaterial->UseMaterial(mat4(1.0), _viewMatrix, _projMatrix);
 
     //Draw
     mMesh->DrawMesh();

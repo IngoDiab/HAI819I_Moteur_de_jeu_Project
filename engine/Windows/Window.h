@@ -10,6 +10,8 @@ class Window final
 {
     GLFWwindow* mWindow = nullptr;
     vector<float> mBackgroundColor = vector<float>(4); //RGBA
+    int mWidth = 0;
+    int mHeight = 0;
 
 public:
     GLFWwindow* GetWindow() const { return mWindow; }
@@ -17,6 +19,9 @@ public:
 
     vector<float> GetBackgroundColor() const { return mBackgroundColor; }
     void SetBackgroundColor(const vector<float>& _color) { mBackgroundColor = _color; RefreshBackgroundColor(); }
+
+    int GetWidth() const { return mWidth; }
+    int GetHeight() const { return mHeight; }
 
 public:
     Window(const int _width, const int _height, const char* _title, GLFWmonitor* _monitor, GLFWwindow* _share, const vector<float>& _backgroundColor);

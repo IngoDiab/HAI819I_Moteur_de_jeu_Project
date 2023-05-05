@@ -2,6 +2,11 @@
 
 #include "engine/Objects/GameObject/GameObject.h"
 
+void Component::PostConstructor()
+{
+
+}
+
 void Component::Update(const float _tickSpeed)
 {
     mTransform.Update(_tickSpeed);
@@ -9,7 +14,7 @@ void Component::Update(const float _tickSpeed)
 
 void Component::LateUpdate(const float _tickSpeed)
 {
-
+    mIsDirty = false;
 }
 
 void Component::UpdateModelMatrix()

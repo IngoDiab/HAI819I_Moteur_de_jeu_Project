@@ -7,10 +7,13 @@ using namespace std;
 
 #include "engine/Objects/Object/Object.h"
 #include "engine/Renderer/Renderer.h"
+#include "engine/Physic/PhysicManager/PhysicManager.h"
 #include "engine/Transform/Transform.h"
 #include "engine/Utils/Interfaces/ITickable.h"
 #include "engine/Utils/Interfaces/IRenderable.h"
+#include "engine/Physic/PhysicComponent/PhysicComponent.h"
 #include "engine/Components/Component/Component.h"
+#include "engine/Physic/Collider/Collider.h"
 
 class Camera;
 class Scene;
@@ -18,6 +21,7 @@ class Scene;
 class GameObject : public Object, public ITickable
 {
 protected:
+    bool mIsDirty = true;
     unsigned int mID;
     Transform mTransform;
     GameObject* mParent = nullptr;
@@ -31,6 +35,8 @@ public :
     GameObject(const vec3& _positions, const vec3& _rotations, const vec3& _scale);
 
 public:
+    bool IsDirty() const {return mIsDirty;}
+
     unsigned int GetID() const {return mID;}
     void SetID(const unsigned int _id) {mID = _id;}
     
@@ -56,7 +62,7 @@ public:
 
 public:
     virtual void Update(const float _tickSpeed) override;
-    void UpdateModelMatrix();
+    //void UpdateModelMatrix();
     virtual void LateUpdate(const float _tickSpeed) override;
 
     Scene* GetWorld();
@@ -104,8 +110,17 @@ T* GameObject::AddComponent(const vec3& _position, const vec3& _rotation, const 
     _component->SetRotation(_rotation);
     _component->SetScale(_scale);
 
+    _component->PostConstructor();
+
     IRenderable* _componentRenderable = dynamic_cast<IRenderable*>(_object);
     if(_componentRenderable) Renderer::Instance()->AddRenderable(_componentRenderable);
+
+    PhysicComponent* _componentPhysic = dynamic_cast<PhysicComponent*>(_object);
+    if(_componentPhysic) 
+    {
+        PhysicManager::Instance()->AddPhysicComponent(_componentPhysic);
+        _componentPhysic->SetReadyToCollide(true);
+    }
 
     return _object;
 }
