@@ -162,14 +162,12 @@ add_executable(engine
 	engine/Scenes/Scene/Scene.cpp
 	engine/Scenes/SceneManager/SceneManager.h
 	engine/Scenes/SceneManager/SceneManager.cpp
-	engine/Scenes/TP1/SceneTP1.h
-	engine/Scenes/TP1/SceneTP1.cpp
-	engine/Scenes/TP2/SceneTP2.h
-	engine/Scenes/TP2/SceneTP2.cpp
-	engine/Scenes/TP3/SceneTP3.h
-	engine/Scenes/TP3/SceneTP3.cpp
-	engine/Scenes/TP4/SceneTP4.h
-	engine/Scenes/TP4/SceneTP4.cpp
+
+	engine/Game/Scenes/SceneMain.h
+	engine/Game/Scenes/SceneMain.cpp
+
+	engine/Game/Player/Player.h
+	engine/Game/Player/Player.cpp
 	
 	engine/ShaderHandlers/BaseShaderHandler/BaseShaderHandler.h
 	engine/ShaderHandlers/BaseShaderHandler/BaseShaderHandler.cpp

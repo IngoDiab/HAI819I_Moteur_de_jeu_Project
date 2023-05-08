@@ -42,6 +42,7 @@ void PhysicComponent::ApplyVelocity(const float _deltaTime)
 
     //Update position
     vec3 _newPosition = mLastPosition + mVelocity*_deltaTime;
+
     mOwner->SetPosition(_newPosition);
 }
 void PhysicComponent::ApplyClip()

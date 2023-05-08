@@ -49,6 +49,7 @@ public:
     void AddForce(const vec3& _force) {mForces += _force;}
     void AddVelocity(const vec3& _velocity) {mVelocity += _velocity;}
     void SetVelocity(const vec3& _velocity) {mVelocity = _velocity;}
+    vec3 GetVelocity(){return mVelocity;}
     void EnableGravity(const bool _enabled) {mHasGravity = _enabled;}
 
 public :
