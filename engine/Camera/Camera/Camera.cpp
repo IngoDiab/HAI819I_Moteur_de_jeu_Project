@@ -11,7 +11,7 @@ Camera::Camera(const vec3& _position, const vec3& _rotation) : GameObject(_posit
 //LookAtLH & PerspectiveLH to have X = right, Y = up and Z = forward (-Z out of screen)
 mat4 Camera::GetViewMatrix() const
 {
-    const vec3 _position = mTransform.GetPosition();
+    const vec3 _position = GetWorldPosition();
     const vec3 _lookAt = _position + mTransform.GetForwardVector();
     return lookAtLH(_position, _lookAt, mTransform.GetUpVector());
 }

@@ -16,7 +16,7 @@ Player::Player()
 
 
     ObjectManager* _objectManager = ObjectManager::Instance();
-    mCamera = _objectManager->Create<Camera>(vec3(0), vec3(0), vec3(1),this);
+    mCamera = _objectManager->Create<Camera>(vec3(0,0,-50), vec3(0), vec3(1),this);
 
     Engine::Instance()->SetViewportCamera(mCamera);
 
