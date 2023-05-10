@@ -38,6 +38,8 @@ public:
     vec3 GetScale() const {return mTransform.GetScale();}
     void SetScale(const vec3& _scale) {mTransform.SetScale(_scale);}
 
+    void SetFOV(const float fov){mFOV = fov;}
+
     bool IsActive() const {return mIsActive;}
     void Activate(const bool _active) {mIsActive = _active; mTransform.SetDrawMeshAxis(!_active);}
 

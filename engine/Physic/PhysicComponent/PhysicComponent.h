@@ -19,7 +19,7 @@ protected:
     vec3 mForces = vec3(0);
     vec3 mVelocity = vec3(0);
     vec3 mAcceleration = vec3(0);
-    float mFriction = .2f;
+    float mFriction = 1;//.2f;
     
     float mMass = 1;
     bool mHasGravity = true;

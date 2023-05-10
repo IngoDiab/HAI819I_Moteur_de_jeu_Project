@@ -11,7 +11,7 @@ class Camera;
 class Renderer final : public Singleton<Renderer>
 {
     vector<IRenderable*> mRenderableObjects = vector<IRenderable*>();
-    bool mCanDraw3DAxis = true;
+    bool mCanDraw3DAxis = false;
 
 public:
     void AddRenderable(IRenderable* _renderable);
