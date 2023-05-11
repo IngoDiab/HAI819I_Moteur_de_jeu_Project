@@ -15,6 +15,7 @@ class Key
 
 public:
     int GetKeyID() const {return mKeyID;}
+    void ClearKey(){mbIsPressedFirstFrame = false; mbIsBeingPressed = false; mbIsReleased = false;}
 
     bool HasNotBeenPressed() { return !mbIsPressedFirstFrame && !mbIsBeingPressed && !mbIsReleased;}
     bool HasBeenPressedOnce() { return mbIsPressedFirstFrame && !mbIsBeingPressed && !mbIsReleased;}

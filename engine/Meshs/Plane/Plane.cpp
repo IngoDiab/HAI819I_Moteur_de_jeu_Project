@@ -27,31 +27,11 @@ vec2 Plane::GetUVVertex(const float _u, const float _v, bool _ceilU, bool _ceilV
 
 void Plane::CreatePlane(const bool _generatePos, const bool _generateUV, const bool _generateIndices, const bool _generateNormales)
 {
-    if(_generatePos)
-    {
-        CreateVerticesPositions();
-        RefreshVBOData(VERTEX_ATTRIBUTE::VERTEX_POSITION);
-    }
-
-    if(_generateUV)
-    {
-        CreateVerticesUVs();
-        RefreshVBOData(VERTEX_ATTRIBUTE::VERTEX_UVS);
-    }
-
-    if(_generateIndices)
-    {
-        CreateIndices();
-        RefreshVBOData(VERTEX_ATTRIBUTE::VERTEX_INDICES);
-    }
-
-    if(_generateNormales)
-    {
-        CreateVerticesNormales();
-        RefreshVBOData(VERTEX_ATTRIBUTE::VERTEX_NORMALE);
-    }
+    if(_generatePos) CreateVerticesPositions();
+    if(_generateUV) CreateVerticesUVs();
+    if(_generateIndices) CreateIndices();
+    if(_generateNormales) CreateVerticesNormales(mPositions);
 }
-
 void Plane::CreateVerticesPositions()
 {
     mPositions.clear();
@@ -59,6 +39,7 @@ void Plane::CreateVerticesPositions()
     for(unsigned int i = 0; i < mNbVertexLength; ++i)
         for(unsigned int j = 0; j < mNbVertexWidth; ++j)
             mPositions[i*mNbVertexWidth+j] = vec3(j/(float)(mNbVertexWidth-1)-.5f,0,i/(float)(mNbVertexLength-1)-.5f);
+    RefreshVBOData(VERTEX_ATTRIBUTE::VERTEX_POSITION);
 }
 
 void Plane::CreateVerticesUVs()
@@ -68,6 +49,8 @@ void Plane::CreateVerticesUVs()
     for(unsigned int i = 0; i < mNbVertexLength; ++i)
         for(unsigned int j = 0; j < mNbVertexWidth; ++j)
             mUVs[i*mNbVertexWidth+j] = vec2(j/(float)mNbVertexWidth,i/(float)mNbVertexLength);
+
+    RefreshVBOData(VERTEX_ATTRIBUTE::VERTEX_UVS);
 }
 
 void Plane::CreateIndices()
@@ -85,14 +68,17 @@ void Plane::CreateIndices()
             mIndices.push_back(i*mNbVertexWidth+j+1);
             mIndices.push_back((i+1)*mNbVertexWidth+j+1);
         }
+
+    RefreshVBOData(VERTEX_ATTRIBUTE::VERTEX_INDICES);
 }
 
-void Plane::CreateVerticesNormales()
+void Plane::CreateVerticesNormales(const vector<vec3>& _positions)
 {
+
     mNormales.clear();
     mNormales.resize(mNbVertexLength * mNbVertexWidth);
 
-    vector<unsigned int> _neighboors = vector<unsigned int>(mPositions.size());
+    vector<unsigned int> _neighboors = vector<unsigned int>(_positions.size());
     unsigned int _nbIndices = mIndices.size();
     for(int i = 0; i < _nbIndices; i+=3)
     {   
@@ -107,9 +93,9 @@ void Plane::CreateVerticesNormales()
         ++_neighboors[_index2];
 
         //Normale triangle
-        vec3 _pos0 = mPositions[_index0];
-        vec3 _pos1 = mPositions[_index1];
-        vec3 _pos2 = mPositions[_index2];
+        vec3 _pos0 = _positions[_index0];
+        vec3 _pos1 = _positions[_index1];
+        vec3 _pos2 = _positions[_index2];
         vec3 _triangleNormales = normalize(cross(_pos2-_pos0, _pos1-_pos0));
 
         //Add normal triangle
@@ -125,4 +111,6 @@ void Plane::CreateVerticesNormales()
         mNormales[i] /= (float)_neighboors[i];
         mNormales[i] = normalize(mNormales[i]);
     }
+
+    RefreshVBOData(VERTEX_ATTRIBUTE::VERTEX_NORMALE);
 }

@@ -1,5 +1,5 @@
 #include "PhysicManager.h"
-
+#include <algorithm>
 #include "engine/Physic/PhysicComponent/PhysicComponent.h"
 #include "engine/Physic/BoxCollider/BoxCollider.h"
 #include "engine/Physic/SphereCollider/SphereCollider.h"
@@ -21,6 +21,13 @@ void PhysicManager::AddPhysicComponent(PhysicComponent* _physicComponent)
         mPhysicSphereComponents.push_back(PhysicSphereData(_physicComponent, _sphere));
         return;
     }
+}
+
+void PhysicManager::RemovePhysiqueComponent(PhysicComponent* _physicComponent)
+{
+
+    mPhysicCubeComponents.erase(remove(mPhysicCubeComponents.begin(), mPhysicCubeComponents.end(), PhysicCubeData(_physicComponent, nullptr)), mPhysicCubeComponents.end());
+    mPhysicSphereComponents.erase(remove(mPhysicSphereComponents.begin(), mPhysicSphereComponents.end(), PhysicSphereData(_physicComponent, nullptr)), mPhysicSphereComponents.end());
 }
 
 void PhysicManager::DeletePhysicComponents()
@@ -135,6 +142,11 @@ void PhysicManager::ResolveCollisions(const float _deltaTime)
     {
         PhysicComponent* _mainComponent =  _data.mMainComponent;
         PhysicComponent* _otherComponent =  _data.mOtherComponent;
+
+        bool _mainIgnoringOther = _mainComponent->IsIgnoring(_otherComponent->GetCollisionType());
+        bool _otherIgnoringMain = _otherComponent->IsIgnoring(_mainComponent->GetCollisionType());
+
+        if(_mainIgnoringOther || _otherIgnoringMain) continue;
 
         Collider* _mainCollider = _mainComponent->GetCollider();
         Collider* _otherCollider = _otherComponent->GetCollider();

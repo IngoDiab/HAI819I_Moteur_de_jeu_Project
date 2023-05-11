@@ -6,11 +6,13 @@ using namespace std;
 #include "engine/Utils/Singleton/Singleton.h"
 #include "engine/Objects/GameObject/GameObject.h"
 #include "engine/Lights/PointLight/PointLight.h"
+#include "engine/Lights/DirectionalLight/DirectionalLight.h"
 #include "engine/Lights/LightManager/LightManager.h"
 
 class ObjectManager final : public Singleton<ObjectManager>
 {
     vector<GameObject*> mSceneGameObjects = vector<GameObject*>();
+    vector<GameObject*> mMarkedForDestroy = vector<GameObject*>();
 
 public:
     void AddGameObject(GameObject* _object);
@@ -27,6 +29,9 @@ public:
 public:
     template<typename T>
     T* Create(const vec3& _position = vec3(0), const vec3& _rotation = vec3(0), const vec3& _scale = vec3(1), GameObject* _parent = nullptr, DURABILITY _durability = DURABILITY::SCENE);
+
+    void Destroy(GameObject* _object);
+    void ProcessDestroy();
 };
 
 template<typename T>
@@ -51,7 +56,10 @@ T* ObjectManager::Create(const vec3& _position, const vec3& _rotation, const vec
     if(_gameobjectRenderable) Renderer::Instance()->AddRenderable(_gameobjectRenderable);
 
     PointLight* _gameobjectPointLight = dynamic_cast<PointLight*>(_gameobject);
-    if(_gameobjectPointLight) LightManager::Instance()->AddLight(_gameobjectPointLight);
+    if(_gameobjectPointLight) LightManager::Instance()->AddPointLight(_gameobjectPointLight);
+
+    DirectionalLight* _gameobjectDirectionalLight = dynamic_cast<DirectionalLight*>(_gameobject);
+    if(_gameobjectDirectionalLight) LightManager::Instance()->AddDirectionalLight(_gameobjectDirectionalLight);
 
     return _object;
 }

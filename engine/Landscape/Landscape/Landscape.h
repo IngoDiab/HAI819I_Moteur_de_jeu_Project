@@ -7,8 +7,8 @@ using namespace std;
 class LandscapeMesh;
 class LandscapeMaterial;
 class MeshComponent;
-class BoxCollider;
-class PhysicComponent;
+//class BoxCollider;
+//class PhysicComponent;
 
 class Landscape : public GameObject, public IRenderable
 {
@@ -26,8 +26,8 @@ protected:
     LandscapeMaterial* mMaterial = nullptr;
     bool mCanBeRendered = true;
 
-    BoxCollider* mBoxCollider = nullptr;
-    PhysicComponent* mPhysicComponent = nullptr;
+    //BoxCollider* mBoxCollider = nullptr;
+    //PhysicComponent* mPhysicComponent = nullptr;
 
 public:
     virtual Mesh* GetMesh(int _index = 0) override {return (Mesh*)mMesh;}

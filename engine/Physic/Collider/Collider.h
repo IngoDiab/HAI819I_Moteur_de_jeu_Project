@@ -49,6 +49,8 @@ public:
     void ClearOnTriggerExit() {mTriggerExitCallback = nullptr;}
 
 public:
+    virtual ~Collider();
+    virtual void Destroy() override;
     virtual void ChangeMeshByDistance(Camera* _renderingCamera, float _threshold) override;
 
 public:

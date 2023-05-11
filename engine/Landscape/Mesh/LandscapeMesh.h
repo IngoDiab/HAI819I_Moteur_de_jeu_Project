@@ -13,7 +13,7 @@ public:
     LandscapeMesh(const int _nbVertexWidth, const int _nbVertexLength);
 
 public:
-    void ApplyHeightmap(const unsigned char* _heightmapImage, const float _maxHeight, const int _widthImage, const int _heightImage, const double& _gameobjectScaleY);
+    void ApplyHeightmap(const unsigned char* _heightmapImage, const float _maxHeight, const int _widthImage, const int _heightImage, const float _shift);
     void ChangeResolution(const int _nbVertexWidth, const int _nbVertexLength);
     void ChangeResolution(const int _change);
 

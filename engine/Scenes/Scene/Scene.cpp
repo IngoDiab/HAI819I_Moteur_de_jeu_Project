@@ -17,17 +17,17 @@ void Scene::UnloadScene()
     ShaderManager* _shaderManager = ShaderManager::Instance();
     _shaderManager->DeleteAllShaders();
 
-    // Renderer* _renderer = Renderer::Instance();
-    // _renderer->DeleteRenderables();
-
-    ObjectManager* _objectManager = ObjectManager::Instance();   
-    _objectManager->DeleteObjectsSpecificDurability(DURABILITY::SCENE);
+    Renderer* _renderer = Renderer::Instance();
+    _renderer->DeleteRenderables();
 
     PhysicManager* _physicManager = PhysicManager::Instance();
     _physicManager->DeletePhysicComponents();
 
-    // LightManager* _lightManager = LightManager::Instance();
-    // _lightManager->DeleteLightsSpecificDurability(DURABILITY::SCENE);
+    LightManager* _lightManager = LightManager::Instance();
+    _lightManager->DeleteAll();
+
+    ObjectManager* _objectManager = ObjectManager::Instance();   
+    _objectManager->DeleteObjectsSpecificDurability(DURABILITY::SCENE);
 }
 
 void Scene::Update(const float _deltaTime)

@@ -29,14 +29,16 @@ void FBO::GenerateTextures(unsigned int _nbTextures)
     BindFBO();
     DeleteTextures();
 
-    Window* _window = Engine::Instance()->GetWindow();
+    //TODO Change
+    int _fboWidth = 0;
+    int _fboHeight = 0;
 
     glGenTextures(_nbTextures, &mTexturesHandle[0]);
 
     for (unsigned int i = 0; i < _nbTextures; ++i)
     {
         glBindTexture(GL_TEXTURE_2D, mTexturesHandle[i]);
-        glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA16F, _window->GetWidth(), _window->GetHeight(), 0, GL_RGBA, GL_FLOAT, NULL);
+        glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA16F, _fboWidth, _fboHeight, 0, GL_RGBA, GL_FLOAT, NULL);
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);

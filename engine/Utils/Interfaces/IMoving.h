@@ -3,7 +3,7 @@
 class IMoving
 {
 protected:
-    float mMovementSpeed = 20;
+    float mMovementSpeed = 50;
     bool mCanMove = true;
 
 public:

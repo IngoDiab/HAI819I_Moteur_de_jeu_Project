@@ -28,7 +28,7 @@ private :
 
     void CreateStars(int count);
     Planet* CreateStar(vec3 position, vec3 scale);
-
+    void LinkScenePlanets();
 
     Planet* CreateEarth(Planet* _parent);
     Planet* CreateMoon(Planet* _parent);

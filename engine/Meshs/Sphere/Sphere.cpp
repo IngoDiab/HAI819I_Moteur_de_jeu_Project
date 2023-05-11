@@ -37,7 +37,7 @@ void Sphere::CreateSphere(const bool _generatePos, const bool _generateUV, const
 
     if(_generateNormales)
     {
-        CreateVerticesNormales();
+        CreateVerticesNormales(mPositions);
         RefreshVBOData(VERTEX_ATTRIBUTE::VERTEX_NORMALE);
     }
 }
@@ -87,7 +87,7 @@ void Sphere::CreateIndices()
         }
 }
 
-void Sphere::CreateVerticesNormales()
+void Sphere::CreateVerticesNormales(const vector<vec3>& _positions)
 {
     mNormales.clear();
     mNormales.resize(mNbVertexAzimut * mNbVertexElevation);

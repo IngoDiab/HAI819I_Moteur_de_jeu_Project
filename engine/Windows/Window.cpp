@@ -3,8 +3,7 @@
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
 
-//TODO Resize window size on callback
-Window::Window(const int _width, const int _height, const char* _title, GLFWmonitor* _monitor, GLFWwindow* _share, const vector<float>& _backgroundColor) : mWidth(_width), mHeight(_height)
+Window::Window(const int _width, const int _height, const char* _title, GLFWmonitor* _monitor, GLFWwindow* _share, const vector<float>& _backgroundColor)
 {
     InitializeGLFW();
     WindowHint();
@@ -15,8 +14,6 @@ Window::Window(const int _width, const int _height, const char* _title, GLFWmoni
     glfwSetCursorPos(mWindow, _width/2, _height/2);
     auto _resizeCallback =[](GLFWwindow* _window, int _width, int _height)
                             {
-                                // mWidth = _width;
-                                // mHeight = _height;
                                 glViewport(0, 0, _width, _height);
                             };
     glfwSetFramebufferSizeCallback(mWindow, _resizeCallback);

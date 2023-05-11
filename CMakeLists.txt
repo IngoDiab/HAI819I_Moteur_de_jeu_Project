@@ -56,6 +56,16 @@ add_definitions(
 
 # engine
 add_executable(engine
+
+	engine/Scenes/TP1/SceneTP1.h
+	engine/Scenes/TP1/SceneTP1.cpp
+	engine/Scenes/TP2/SceneTP2.h
+	engine/Scenes/TP2/SceneTP2.cpp
+	engine/Scenes/TP3/SceneTP3.h
+	engine/Scenes/TP3/SceneTP3.cpp
+	engine/Scenes/TP4/SceneTP4.h
+	engine/Scenes/TP4/SceneTP4.cpp
+	
 	common/shader.cpp
 	common/shader.hpp
 	common/controls.cpp
@@ -116,6 +126,8 @@ add_executable(engine
 	
 	engine/Lights/PointLight/PointLight.h
 	engine/Lights/PointLight/PointLight.cpp
+	engine/Lights/DirectionalLight/DirectionalLight.h
+	engine/Lights/DirectionalLight/DirectionalLight.cpp
 	engine/Lights/LightManager/LightManager.h
 	engine/Lights/LightManager/LightManager.cpp
 	
@@ -165,9 +177,18 @@ add_executable(engine
 
 	engine/Game/Scenes/SceneMain.h
 	engine/Game/Scenes/SceneMain.cpp
-
+	engine/Game/Scenes/Scene_Earth.h
+	engine/Game/Scenes/Scene_Earth.cpp
 	engine/Game/Player/Player.h
 	engine/Game/Player/Player.cpp
+	engine/Game/Player/Ground_Player.h
+	engine/Game/Player/Ground_Player.cpp
+	engine/Game/Decor/Spaceship.h
+	engine/Game/Decor/Spaceship.cpp
+	engine/Game/Manager/GameManager.h
+	engine/Game/Manager/GameManager.cpp
+	engine/Game/Weapon/Projectile.h
+	engine/Game/Weapon/Projectile.cpp
 	
 	engine/ShaderHandlers/BaseShaderHandler/BaseShaderHandler.h
 	engine/ShaderHandlers/BaseShaderHandler/BaseShaderHandler.cpp

@@ -22,6 +22,11 @@ struct PhysicCubeData : public PhysicData
     BoxCollider* mBoxCollider = nullptr;
     PhysicCubeData(){}
     PhysicCubeData(PhysicComponent* _component, BoxCollider* _box) : PhysicData(_component), mBoxCollider(_box){}
+
+    bool operator==(const PhysicCubeData _other)
+    {
+        return mPhysicComponent == _other.mPhysicComponent;
+    }
 };
 
 struct PhysicSphereData : public PhysicData
@@ -29,6 +34,11 @@ struct PhysicSphereData : public PhysicData
     SphereCollider* mSphereCollider = nullptr;
     PhysicSphereData(){}
     PhysicSphereData(PhysicComponent* _component, SphereCollider* _sphere) : PhysicData(_component), mSphereCollider(_sphere){}
+
+    bool operator==(const PhysicSphereData _other)
+    {
+        return mPhysicComponent == _other.mPhysicComponent;
+    }
 };
 
 class PhysicManager final : public Singleton<PhysicManager>
@@ -41,6 +51,7 @@ class PhysicManager final : public Singleton<PhysicManager>
 
 public:
     void AddPhysicComponent(PhysicComponent* _physicComponent);
+    void RemovePhysiqueComponent(PhysicComponent* _physicComponent);
     void DeletePhysicComponents();
 
 public:

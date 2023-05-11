@@ -67,7 +67,7 @@ protected:
     virtual void CreateVerticesPositions();
     virtual void CreateVerticesUVs();
     virtual void CreateIndices();
-    virtual void CreateVerticesNormales();
+    virtual void CreateVerticesNormales(const vector<vec3>& _positions);
 
 public:
     void DrawMesh();

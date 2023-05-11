@@ -19,6 +19,7 @@ Skybox::~Skybox()
 
 void Skybox::Draw(Camera* _renderingCamera)
 {
+    if(!_renderingCamera) return;
     //Calculate VP
     const mat4& _viewMatrix = _renderingCamera->GetViewMatrix();
     const mat4& _projMatrix = _renderingCamera->GetProjectionMatrix();

@@ -17,6 +17,11 @@ void Component::LateUpdate(const float _tickSpeed)
     mIsDirty = false;
 }
 
+void Component::Destroy()
+{
+    delete this;
+}
+
 void Component::UpdateModelMatrix()
 {
     mTransform.UpdateModelMatrix();

@@ -1,11 +1,12 @@
 #pragma once
 
 #include "engine/Transform/Transform.h"
+#include "engine/Objects/Object/Object.h"
 #include "engine/Utils/Interfaces/ITickable.h"
 
 class GameObject;
 
-class Component : public ITickable
+class Component : public ITickable, public Object
 {
 protected:
     bool mIsDirty = true;
@@ -37,6 +38,7 @@ public:
 public:
     virtual void Update(const float _tickSpeed);
     virtual void LateUpdate(const float _tickSpeed);
+    virtual void Destroy();
 
 public:
     void UpdateModelMatrix();    

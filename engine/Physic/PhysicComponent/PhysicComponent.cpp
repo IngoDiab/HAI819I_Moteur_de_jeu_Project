@@ -1,6 +1,7 @@
 #include "PhysicComponent.h"
 #include "engine/Objects/GameObject/GameObject.h"
 #include "engine/Landscape/Landscape/Landscape.h"
+#include "engine/Physic/PhysicManager/PhysicManager.h"
 
 #include <glm/gtc/epsilon.hpp>
 using namespace glm;
@@ -15,6 +16,13 @@ void PhysicComponent::PostConstructor()
     if(!mOwner) return;
     mCollider = mOwner->GetComponent<Collider>();
     mReadyToCollide = false;
+}
+
+void PhysicComponent::Destroy()
+{
+    PhysicManager* _physicManager = PhysicManager::Instance();
+    _physicManager->RemovePhysiqueComponent(this);
+    Component::Destroy();
 }
 
 void PhysicComponent::ApplyVelocity(const float _deltaTime)
@@ -45,12 +53,27 @@ void PhysicComponent::ApplyVelocity(const float _deltaTime)
 
     mOwner->SetPosition(_newPosition);
 }
+
 void PhysicComponent::ApplyClip()
 {
     if(!mClipToLandscape) return;
-    vec3 _position = mOwner->GetTransformInstance()->GetTransformData()->mWorldPosition;
-    mClipToLandscape->GetProjectionOnPlane(_position,10);
-    mOwner->SetPosition(_position);
+    vec3 _position = mOwner->GetWorldPosition();
+    vec3 _projected = _position;
+    mClipToLandscape->GetProjectionOnPlane(_projected,mOffsetClip);
+    if(!mActiveClip && _position.y < _projected.y - 0.01f)
+    {
+        EnableGravity(false);
+        ActiveClip(true);
+        mVelocity = vec3(0);
+    }
+    if(mActiveClip) mOwner->SetPosition(_projected);
+}
+
+float PhysicComponent::ProjectedHeight()
+{
+    vec3 _projectedPosition;
+    mClipToLandscape->GetProjectionOnPlane(_projectedPosition,mOffsetClip);
+    return _projectedPosition.y;
 }
 
 void PhysicComponent::ResponseCollision(const float _deltaTime, const vec3& _normal, const float _penetration)
@@ -130,4 +153,17 @@ void PhysicComponent::BounceOnCollide(const vec3& _normal)
 
     mVelocity = (_isVelNull.x && _isVelNull.y && _isVelNull.z) ? _normal* mBounciness : _bouncedVelocity * length(mVelocity) * mBounciness;
     mAcceleration = (_isAccNull.x && _isAccNull.y && _isAccNull.z) ? _normal* mBounciness : _bouncedAcceleration * length(mAcceleration) * mBounciness;
+}
+
+void PhysicComponent::AddIgnoredCollisionType(const vector<COLLISION_TYPE>& _types)
+{
+    for(COLLISION_TYPE _type : _types)
+        if(!IsIgnoring(_type)) mIgnoringCollisions.push_back(_type);
+}
+
+bool PhysicComponent::IsIgnoring(const COLLISION_TYPE _type)
+{
+    for(COLLISION_TYPE _typeIgnored : mIgnoringCollisions)
+        if(_typeIgnored == _type) return true;
+    return false;
 }

@@ -18,5 +18,5 @@ protected:
     virtual void CreateVerticesUVs() override;
     virtual void CreateIndices() override;
     void CreateIndicesPacked();
-    virtual void CreateVerticesNormales() override;
+    virtual void CreateVerticesNormales(const vector<vec3>& _positions) override;
 };

@@ -71,7 +71,7 @@ void Mesh::CreateIndices()
 }
 
 
-void Mesh::CreateVerticesNormales()
+void Mesh::CreateVerticesNormales(const vector<vec3>& _positions)
 {
     
 }

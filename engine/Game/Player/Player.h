@@ -1,11 +1,11 @@
 #pragma once
 
 #include "engine/Objects/GameObject/GameObject.h"
-#include "engine/Physic/PhysicComponent/PhysicComponent.h"
-#include "engine/Physic/BoxCollider/BoxCollider.h"
-#include "engine/Components/MeshComponent/MeshComponent.h"
-#include "engine/Camera/Camera/Camera.h"
-#include "engine/Engine//Engine.h"
+
+class PhysicComponent;
+class BoxCollider;
+class MeshComponent;
+class Camera;
 
 using namespace glm;
 
@@ -20,14 +20,21 @@ class Player final : public GameObject
     float brakeForce = 1; float brakeMinForce = 25;
     float brakeLimit = 0.1f;
     float brakeRatio = 0.05f; float brakeCurve = 2;
+
+    float mShotPower = 200;
 public:
     Player();
 
 private :
+    GameObject* mLeftCanon = nullptr;
+    GameObject* mRightCanon = nullptr;
     MeshComponent* mMeshComponent = nullptr;
     BoxCollider* mBoxCollider = nullptr;
     PhysicComponent* mPhysicComponent = nullptr;
     Camera* mCamera = nullptr;
+
+    void InitializeCanons();
+    void Shoot(bool _shootPressed);
 
     void ApplyThrustForward(float force);
     void Brake(bool b);

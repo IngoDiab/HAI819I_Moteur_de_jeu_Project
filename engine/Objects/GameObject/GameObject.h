@@ -64,16 +64,19 @@ public:
     virtual void Update(const float _tickSpeed) override;
     //void UpdateModelMatrix();
     virtual void LateUpdate(const float _tickSpeed) override;
+    virtual void Destroy();
 
     Scene* GetWorld();
     float GetInSceneDeltaTime();
 
     void Draw3DAxis();
 
+
 private:
     bool HasChild(GameObject* _child) const;
     void AddChildren(GameObject* _child);
-    void DeleteChild(GameObject* _child);
+    void RemoveChild(GameObject* _child);
+    void DeleteChildren();
     void DeleteComponents();
 
 public:
@@ -144,7 +147,7 @@ void GameObject::DeleteComponent()
     {
         T* _castedComp = dynamic_cast<T*>(_component);
         if(!_castedComp) continue;
-        mComponents.erase(find(mComponents.begin(), mComponents.end(), _component));
+        mComponents.erase(remove(mComponents.begin(), mComponents.end(), _component), mComponents.end());
         delete _component;
     }
 }

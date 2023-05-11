@@ -6,8 +6,16 @@
 
 #include <iostream>
 
-Engine::Engine()
-{}
+Engine::Engine(LAUNCH_MOD _launchMod, const int _widthWindow, const int _heightWindow, const string& _nameWindow) : mLaunchMod(_launchMod)
+{
+    CreateWindow(_widthWindow, _heightWindow, _nameWindow);
+    GenerateVAO();
+    CreateSkybox();
+    //if(_launchMode == LAUNCH_MOD::GAME) return;
+    CreateEditorCamera();
+
+    InitializeMouseManager();
+}
 
 Engine::~Engine()
 {
@@ -15,22 +23,39 @@ Engine::~Engine()
     delete mMainWindow;
 }
 
-void Engine::Initialize(const int _widthWindow, const int _heightWindow, const string& _nameWindow)
+void Engine::CreateWindow(const int _widthWindow, const int _heightWindow, const string& _nameWindow)
 {
     const vector<float> _colorBackground = vector<float>{0.8f, 0.8f, 0.8f, 1.0f};
     mMainWindow = new Window(_widthWindow, _heightWindow, _nameWindow.c_str(), NULL, NULL, _colorBackground);
-    mMainWindow->ActivateInput(GLFW_STICKY_KEYS, GL_TRUE);
+    //mMainWindow->ActivateInput(GLFW_STICKY_KEYS, GL_TRUE);
     mMainWindow->EnableDepth(true);
-    //mMainWindow->EnableCullFace(true);
+    mMainWindow->EnableCullFace(true);
+}
 
+void Engine::CreateSkybox()
+{
     mSkybox = new Skybox();
+}
 
+void Engine::CreateEditorCamera()
+{
     mEditorCamera = mObjectManager.Create<EditorCamera>(vec3(0), vec3(0), vec3(1), nullptr, DURABILITY::PERSISTENT);
     mEditorCamera->Initialize();
     ResetCameraToEditor();
+}
 
+void Engine ::GenerateVAO()
+{
     mMainVAO.GenerateVAO();
     mMainVAO.BindVAO();
+}
+
+void Engine::InitializeMouseManager()
+{
+    bool _isEngineMod = mLaunchMod == LAUNCH_MOD::ENGINE;
+    mMouseManager.EnableCursor(mMainWindow->GetWindow(), _isEngineMod);
+    mMouseManager.InvertOnX(_isEngineMod);
+    mMouseManager.InvertOnY(_isEngineMod);
 }
 
 void Engine::Run()
@@ -38,6 +63,8 @@ void Engine::Run()
     MouseManager::Instance()->RefreshMousePosition(mMainWindow->GetWindow());
     do{
         CalculateDeltaTime();
+        mObjectManager.ProcessDestroy();
+
         MouseManager::Instance()->RefreshMousePosition(mMainWindow->GetWindow());
         mInputManager.CheckStateAllKeys(mMainWindow->GetWindow());
         mInputManager.CheckStateAllAxis(mMainWindow->GetWindow());

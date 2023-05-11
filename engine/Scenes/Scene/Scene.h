@@ -12,7 +12,7 @@ using namespace std;
 class Scene : public Object, public ITickable
 {
 public:
-    ~Scene();
+    virtual ~Scene();
 
 public:
     virtual void LoadScene() = 0;

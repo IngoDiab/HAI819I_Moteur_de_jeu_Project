@@ -16,6 +16,13 @@ struct PointLightHandlers
     int mIsEnabledHandler;
 };
 
+struct DirectionalLightHandlers
+{
+    int mColorHandler;
+    int mDirectionHandler;
+    int mIsEnabledHandler;
+};
+
 class BaseShaderHandler
 {
 protected:
@@ -28,6 +35,7 @@ protected:
     int mSkyboxHandler;
 
     vector<PointLightHandlers> mPointLightHandlers;
+    vector<DirectionalLightHandlers> mDirectionalLightHandlers;
 
 public:
     BaseShaderHandler(const string& _vertexShader, const string& _fragShader);
@@ -40,6 +48,8 @@ public:
 
     virtual void SendMVP(const mat4& _model, const mat4& _view, const mat4& _proj);
     void SendLights();
+    void SendCameraPosition();
+    void SendSkybox();
 
     virtual void GetTextureLocation(int& _slotTexture, const string& _nameLocation);
     virtual void GetUniformLocation(int& _slotUniform, const string& _nameLocation);

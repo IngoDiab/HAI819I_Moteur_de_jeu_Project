@@ -53,9 +53,6 @@ void InputManager::CheckStateAllKeys(GLFWwindow* _window)
     }
 }
 
-#include<iostream>
-using namespace std;
-
 void InputManager::CheckStateAllAxis(GLFWwindow* _window)
 {
     for(Axis& _axis : mBindedAxis)

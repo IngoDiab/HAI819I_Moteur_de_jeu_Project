@@ -32,4 +32,5 @@ public:
 
 public:
     virtual ~PointLight();
+	virtual void Destroy() override;
 };

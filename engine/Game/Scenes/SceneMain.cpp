@@ -4,6 +4,7 @@
 #include "engine/Skyboxes/Skybox/Skybox.h"
 #include "engine/Components/MeshComponent/MeshComponent.h"
 #include "engine/Materials/Material.h"
+#include "engine/Game/Manager/GameManager.h"
 
 #include "engine/Game/Player/Player.h"
 
@@ -20,15 +21,17 @@ void SceneMain::LoadScene()
     starSpawnRange = vec3(1000,100,1000);
     starSizeRange = vec2(5,30);
 
-    CreateStars(50);
+    CreateStars(16);
 
     Player* _player = CreatePlayer();
+    LinkScenePlanets();
 }
 
 Player* SceneMain::CreatePlayer()
 {
     ObjectManager* _objectManager = ObjectManager::Instance();
     Player* _player = _objectManager->Create<Player>(vec3(0,0,0), vec3(0), vec3(1));
+    
     return _player;
 }
 
@@ -40,7 +43,8 @@ Planet* SceneMain::CreateStar(vec3 position, vec3 scale)
     _material->SetTexture(TEXTURE_SLOT::ALBEDO, "Textures/2D/sun.jpg");
     _material->SetValueCoefficients(COEFF_SLOT::EMISSIVNESS, 1);
 
-    //PointLight* _sunLight = _objectManager->Create<PointLight>();
+    PointLight* _sunLight = _objectManager->Create<PointLight>(vec3(0), vec3(0), vec3(1), _sun);
+    _sunLight->SetIntensity(10000);
     return _sun;
 }
 
@@ -54,6 +58,18 @@ void SceneMain::CreateStars(int count)
         stars.push_back(_star);
         std::cout << pos.x << " " << pos.y << " " << pos.z << std::endl;
     }
+}
+
+void SceneMain::LinkScenePlanets()
+{
+    ObjectManager* _objectManager = ObjectManager::Instance();
+    GameManager* _gm = GameManager::Instance();
+
+    Planet* _earth = _objectManager->Create<Planet>(vec3(0,0,10), vec3(0), vec3(10));
+    Material* _material = _earth->GetMeshComponent()->GetMaterial(0);
+    _material->SetTexture(TEXTURE_SLOT::ALBEDO, "Textures/2D/earth.jpg");
+    _material->SetValueCoefficients(COEFF_SLOT::EMISSIVNESS, 1);
+    _gm->AddScenePlanet(_earth, "Earth");
 }
 
 /*

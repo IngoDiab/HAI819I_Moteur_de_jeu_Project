@@ -20,16 +20,19 @@ public:
     //virtual Mesh* GetMesh() override {return mMesh[0];}
     virtual Mesh* GetMesh(int _index) override {return mMeshs[_index];}
     void SetMesh(int _index, Mesh* const _mesh) {mMeshs[_index] = _mesh;}
+    int GetNbMeshs() const {return mMeshs.size();}
 
     //virtual BaseMaterial* GetRendererMaterial() override {return (BaseMaterial*)mMaterial[0];}
     virtual BaseMaterial* GetRendererMaterial(int _index) override {return (BaseMaterial*)mMaterials[_index];}
     Material* GetMaterial(int _index) {return mMaterials[_index];}
     void SetMaterial(int _index, Material* const _material) {mMaterials[_index] = _material;}
+    int GetNbMaterials() const {return mMaterials.size();}
 
     virtual bool CanBeRendered() const override {return mCanBeRendered;}
     void SetCanBeRendered(const bool _canBeRendered) {mCanBeRendered = _canBeRendered;}
 
 public:
+    virtual void Destroy() override;
     virtual ~MeshComponent();
 
 public:

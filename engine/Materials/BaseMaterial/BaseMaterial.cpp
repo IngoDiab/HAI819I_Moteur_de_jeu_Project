@@ -11,6 +11,7 @@ void BaseMaterial::UseMaterial(const mat4& _model, const mat4& _view, const mat4
 {
     mShader->SendMVP(_model, _view, _proj);
     mShader->SendLights();
+    mShader->SendCameraPosition();
 }
 
 void BaseMaterial::LoadTexture(unsigned int& _textureSlot, const string& _texturePath)

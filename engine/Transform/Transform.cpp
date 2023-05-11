@@ -34,7 +34,8 @@ void Transform::Update(const float _tickSpeed)
     else
     {
         TransformData _parentData = *mTransformParent->GetTransformData();
-        mTransformData.mWorldPosition = mTransformData.mLocalPosition + _parentData.mWorldPosition;
+        vec4 _worldPos = mTransformParent->GetModelMatrix() * vec4(mTransformData.mLocalPosition,1.0);
+        mTransformData.mWorldPosition = vec3(_worldPos.x, _worldPos.y, _worldPos.z);
         mTransformData.mWorldRotation = mTransformData.mLocalRotation + _parentData.mWorldRotation;
         mTransformData.mWorldScale = mTransformData.mLocalScale * _parentData.mWorldScale;
     }
@@ -82,6 +83,7 @@ void Transform::Draw3DAxis()
 {
     if(!mDrawMeshAxis) return;
     Camera* _renderingCamera = Engine::Instance()->GetViewportCamera();
+    if(!_renderingCamera) return;
     //Calculate VP
     const mat4& _viewMatrix = _renderingCamera->GetViewMatrix();
     const mat4& _projMatrix = _renderingCamera->GetProjectionMatrix();

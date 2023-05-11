@@ -2,9 +2,9 @@
 
 #include "engine/ShaderHandlers/ShaderHandler/ShaderHandler.h"
 
-Material::Material() : Material(CUSTOM_PBR_VERTEX, CUSTOM_PBR_FRAG)
+Material::Material() : Material(PHONG_VERTEX, PHONG_FRAG)
 {
-
+    
 }
 
 Material::Material(const string& _vertexShader, const string& _fragShader)
@@ -12,6 +12,7 @@ Material::Material(const string& _vertexShader, const string& _fragShader)
     mShaderHandler = new ShaderHandler(_vertexShader, _fragShader);
     mShaderHandler->Initialize();
     mShader = mShaderHandler;
+    Initialize();
 }
 
 Material::~Material()
@@ -24,7 +25,6 @@ void Material::Initialize()
 {
     mColors[(int)COLOR_SLOT::AMBIENT] = vec3(.01f);
     mColors[(int)COLOR_SLOT::DIFFUSE] = vec3(1);
-    mColors[(int)COLOR_SLOT::SPECULAR] = vec3(1);
 
     mCoeffs[(int)COEFF_SLOT::TILING] = 1;
 }

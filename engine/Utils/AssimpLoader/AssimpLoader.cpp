@@ -58,9 +58,9 @@ void AssimpLoader::LoadNodeMeshesMaterials(const string& _texturesPath, const ai
         for(unsigned int i = 0; i<_nbTriangles; ++i)
         {
             aiFace _triangle = _loadedMesh->mFaces[i];
-            for (unsigned int j = 0; j < 3; j++) {
-                _mesh->mIndices.push_back(_triangle.mIndices[j]);
-            }
+            _mesh->mIndices.push_back(_triangle.mIndices[0]);
+            _mesh->mIndices.push_back(_triangle.mIndices[2]);
+            _mesh->mIndices.push_back(_triangle.mIndices[1]);
         }
 
         _mesh->RefreshVBOData(VERTEX_ATTRIBUTE::VERTEX_POSITION);

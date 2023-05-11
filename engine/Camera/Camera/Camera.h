@@ -21,7 +21,7 @@ protected:
     float mFOV = 45.;
     float mRatio = 16./9.;
     float mZNear = 0.1;
-    float mZFar = 1000.;
+    float mZFar = 100000.;
 
 public:
     Camera();

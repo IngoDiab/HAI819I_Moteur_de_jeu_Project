@@ -10,10 +10,10 @@ Landscape::Landscape()
 {
     CreateLandscapeMesh();
     CreateLandscapeMaterial();
-    mBoxCollider = AddComponent<BoxCollider>();
-    mPhysicComponent = AddComponent<PhysicComponent>();
-    mPhysicComponent->EnableGravity(false);
-    mPhysicComponent->SetStatic(true);
+    // mBoxCollider = AddComponent<BoxCollider>();
+    // mPhysicComponent = AddComponent<PhysicComponent>();
+    // mPhysicComponent->EnableGravity(false);
+    // mPhysicComponent->SetStatic(true);
 }
 
 Landscape::~Landscape()
@@ -70,6 +70,8 @@ void Landscape::ApplyHeightmap(const string& _heightmapPath, const float _maxHei
     mHeightmap = loadImage(_heightmapPath, mWidthImage, mHeightImage, channels, 1);
     mMaterial->SetHeightmap(_heightmapPath, mMaxHeight);
     mMaterial->SetShift(_shift);
+
+    mMesh->ApplyHeightmap(mHeightmap, _maxHeight, mWidthImage, mHeightImage, _shift);
 }
 
 void Landscape::ChangeResolution(const int _nbVertexWidth, const int _nbVertexLength)

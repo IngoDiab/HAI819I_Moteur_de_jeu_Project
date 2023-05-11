@@ -54,7 +54,7 @@ void Cube::CreateCube(const bool _generatePos, const bool _generateUV, const boo
 
     if(_generateNormales)
     {
-        CreateVerticesNormales();
+        CreateVerticesNormales(mPositions);
         RefreshVBOData(VERTEX_ATTRIBUTE::VERTEX_NORMALE);
     }
 }
@@ -253,7 +253,7 @@ void Cube::CreateIndicesPacked()
     };
 }
 
-void Cube::CreateVerticesNormales()
+void Cube::CreateVerticesNormales(const vector<vec3>& _positions)
 {
     mNormales.clear();
     mNormales.resize(mPositions.size());

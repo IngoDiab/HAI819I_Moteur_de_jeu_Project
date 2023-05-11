@@ -1,5 +1,22 @@
 #include "Collider.h"
 #include "engine/Utils/Printer/Printer.h"
+#include "engine/Renderer/Renderer.h"
+
+Collider::~Collider()
+{
+    ClearOnCollisionCallback();
+    ClearOnTriggerEnter();
+    ClearOnTriggerExit();
+    ClearOnTriggerStay();
+}
+
+void Collider::Destroy()
+{
+    Renderer* _renderer = Renderer::Instance();
+    _renderer->RemoveRenderable(this);
+    Component::Destroy();
+}
+
 void Collider::ChangeMeshByDistance(Camera* _renderingCamera, float _threshold)
 {
 
@@ -94,5 +111,5 @@ void Collider::AddColliderInContact(Collider* _collider, const CollisionData& _d
 // void Collider::DeleteTriggerInContact(Collider* _trigger)
 // {
 //     if(!AlreadyInContact(_trigger)) return;
-//     mTriggerInContact.erase(find(mTriggerInContact.begin(), mTriggerInContact.end(), _trigger));
+//     mTriggerInContact.erase(remove(mTriggerInContact.begin(), mTriggerInContact.end(), _trigger), mTriggerInContact.end());
 // }

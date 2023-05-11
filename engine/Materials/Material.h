@@ -51,8 +51,9 @@ protected:
     vector<float> mCoeffs = vector<float>(7);
 
 public:
-    void SetTexture(const TEXTURE_SLOT _slot, const string& _texturePath){LoadTexture(mTextures[(int)_slot], _texturePath);}
-    void SetValueCoefficients(COEFF_SLOT _slot, int _value) {mCoeffs[(int)_slot] = _value;}
+    void SetColor(const COLOR_SLOT _slot, const vec3& _color) {mColors[(int)_slot] = _color;}
+    void SetTexture(const TEXTURE_SLOT _slot, const string& _texturePath) {LoadTexture(mTextures[(int)_slot], _texturePath);}
+    void SetValueCoefficients(const COEFF_SLOT _slot, int _value) {mCoeffs[(int)_slot] = _value;}
 
 public:
     Material();

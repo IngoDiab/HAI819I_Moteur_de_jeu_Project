@@ -43,6 +43,17 @@ void GameObject::LateUpdate(const float _tickSpeed)
     mIsDirty = false;
 }
 
+void GameObject::Destroy()
+{
+    DeleteComponents();
+    DeleteChildren();
+
+    ObjectManager* _objectManager = ObjectManager::Instance();
+    _objectManager->RemoveGameObject(this);
+
+    delete this;
+}
+
 Scene* GameObject::GetWorld()
 {
     return SceneManager::Instance()->GetCurrentScene();
@@ -63,7 +74,7 @@ void GameObject::SetParent(GameObject* _gameobject)
     const bool _changeParentToGameObject = !mParent && _gameobject;
 
     //Remove current parent-child link
-    if(mParent) mParent->DeleteChild(this);
+    if(mParent) mParent->RemoveChild(this);
 
     //Link child with parent
     mParent = _gameobject;
@@ -101,16 +112,23 @@ void GameObject::AddChildren(GameObject* _child)
     mChildren.push_back(_child);
 }
 
-void GameObject::DeleteChild(GameObject* _child)
+void GameObject::RemoveChild(GameObject* _child)
 {
     if(HasChild(_child)) return;
-    mChildren.erase(find(mChildren.begin(), mChildren.end(), _child));
+    mChildren.erase(remove(mChildren.begin(), mChildren.end(), _child), mChildren.end());
+}
+
+void GameObject::DeleteChildren()
+{
+    for(GameObject* _child : mChildren)
+        if(_child) _child->Destroy();
+    mChildren.clear();
 }
 
 void GameObject::DeleteComponents()
 {
     for(Component* _component : mComponents)
-        if(_component) delete _component;
+        if(_component) _component->Destroy();
     mComponents.clear();
 }
 

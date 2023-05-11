@@ -10,10 +10,18 @@
 #include "engine/Materials/Material.h"
 #include "engine/ShaderHandlers/ShaderHandler/ShaderHandler.h"
 #include "engine/Camera/Camera/Camera.h"
+#include "engine/Renderer/Renderer.h"
 
 MeshComponent::~MeshComponent()
 {
     CleanRessources();
+}
+
+void MeshComponent::Destroy()
+{
+    Renderer* _renderer = Renderer::Instance();
+    _renderer->RemoveRenderable(this);
+    Component::Destroy();
 }
 
 void MeshComponent::ChangeMeshByDistance(Camera* _renderingCamera, float _threshold)

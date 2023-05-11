@@ -1,6 +1,7 @@
 #include "Camera.h"
 #include "engine/Transform/Transform.h"
 #include <glm/gtc/matrix_transform.hpp>
+#include <glm/gtx/euler_angles.hpp>
 
 Camera::Camera(){}
 
@@ -13,7 +14,10 @@ mat4 Camera::GetViewMatrix() const
 {
     const vec3 _position = GetWorldPosition();
     const vec3 _lookAt = _position + mTransform.GetForwardVector();
-    return lookAtLH(_position, _lookAt, mTransform.GetUpVector());
+    const mat4 _rotationMatrix = eulerAngleXYZ(GetWorldRotation().x, GetWorldRotation().y, GetWorldRotation().z);
+    const vec4 _upV4 = _rotationMatrix * vec4(mTransform.GetUpVector(),0);
+    const vec3 _up(_upV4);
+    return lookAtLH(_position, _lookAt, (GetWorldRotation().x < 270 && GetWorldRotation().x > 90 ? -1.f : 1.f) * mTransform.GetUpVector());
 }
 
 mat4 Camera::GetProjectionMatrix() const

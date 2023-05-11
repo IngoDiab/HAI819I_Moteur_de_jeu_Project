@@ -3,10 +3,14 @@
 #include "engine/Objects/GameObject/GameObject.h"
 
 class MeshComponent;
+class PhysicComponent;
+class BoxCollider;
 
 class Planet : public GameObject
 {
     MeshComponent* mMeshComponent = nullptr;
+    BoxCollider* mBoxCollider = nullptr;
+    PhysicComponent* mPhysicComponent = nullptr;
     
     float mAngleRevolution = 0;
     float mRevolutionSpeed = 10;

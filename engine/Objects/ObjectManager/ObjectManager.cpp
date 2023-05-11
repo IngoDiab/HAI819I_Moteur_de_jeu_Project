@@ -1,5 +1,5 @@
 #include "ObjectManager.h"
-#include <algorithm>
+
 void ObjectManager::AddGameObject(GameObject* _object)
 {
     if(Exist(_object)) return;
@@ -9,7 +9,7 @@ void ObjectManager::AddGameObject(GameObject* _object)
 void ObjectManager::RemoveGameObject(GameObject* _object)
 {
     if(!Exist(_object)) return;
-    mSceneGameObjects.erase(find(mSceneGameObjects.begin(), mSceneGameObjects.end(), _object));
+    mSceneGameObjects.erase(remove(mSceneGameObjects.begin(), mSceneGameObjects.end(), _object), mSceneGameObjects.end());
 }
 
 void ObjectManager::TickObjects(const float _deltaTime)
@@ -48,4 +48,18 @@ void ObjectManager::DeleteObjects()
     for(GameObject* _object : mSceneGameObjects)
         if(_object) delete _object;
     mSceneGameObjects.clear();
+}
+
+void ObjectManager::Destroy(GameObject* _object)
+{
+    RemoveGameObject(_object);
+    if(!_object->IsMarkedForDestroy())mMarkedForDestroy.push_back(_object);
+    _object->MarkForDestroy();
+}
+
+void ObjectManager::ProcessDestroy()
+{
+    for(GameObject* _object : mMarkedForDestroy)
+        _object->Destroy();
+    mMarkedForDestroy.clear();
 }

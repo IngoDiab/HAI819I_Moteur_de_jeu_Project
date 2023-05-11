@@ -1,4 +1,6 @@
 #include "PointLight.h"
+#include "engine/Lights/LightManager/LightManager.h"
+
 
 PointLight::PointLight() : GameObject()
 {}
@@ -11,3 +13,11 @@ PointLight::PointLight(const vec3& _positions, const vec3& _rotations, const vec
 
 PointLight::~PointLight()
 {}
+
+void PointLight::Destroy()
+{
+    LightManager* _lightManager = LightManager::Instance();
+    _lightManager->RemovePointLight(this);
+
+    GameObject::Destroy();
+}

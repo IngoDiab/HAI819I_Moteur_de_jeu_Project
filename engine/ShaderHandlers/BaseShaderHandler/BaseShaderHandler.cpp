@@ -2,8 +2,12 @@
 #include <GL/glew.h>
 #include <glm/gtc/type_ptr.hpp>
 #include <common/shader.hpp>
+#include "engine/Engine/Engine.h"
+#include "engine/Camera/Camera/Camera.h"
 #include "engine/ShaderHandlers/ShaderManager/ShaderManager.h"
 #include "engine/Lights/LightManager/LightManager.h"
+#include "engine/Lights/PointLight/PointLight.h"
+#include "engine/Lights/DirectionalLight/DirectionalLight.h"
 
 #define NB_POINT_LIGHTS 16
 
@@ -22,14 +26,20 @@ void BaseShaderHandler::Initialize()
     mSkyboxHandler = glGetUniformLocation(mShaderHandler, "skybox");
 
     mPointLightHandlers.resize(NB_POINT_LIGHTS);
+    mDirectionalLightHandlers.resize(NB_POINT_LIGHTS);
 
     for(int i = 0; i < NB_POINT_LIGHTS; ++i)
     {
-        PointLightHandlers _pointLightHandlers = mPointLightHandlers[i];
+        //PointLightHandlers _pointLightHandlers = mPointLightHandlers[i];
         mPointLightHandlers[i].mPositionHandler = glGetUniformLocation(mShaderHandler, ("mPointLights["+to_string(i)+"].mLightPos").c_str());
         mPointLightHandlers[i].mColorHandler = glGetUniformLocation(mShaderHandler, ("mPointLights["+to_string(i)+"].mLightColor").c_str());
         mPointLightHandlers[i].mPowerHandler = glGetUniformLocation(mShaderHandler, ("mPointLights["+to_string(i)+"].mLightPower").c_str());
         mPointLightHandlers[i].mIsEnabledHandler = glGetUniformLocation(mShaderHandler, ("mPointLights["+to_string(i)+"].mIsEnabled").c_str());
+
+        //DirectionalLightHandlers _directionalLightHandlers = mDirectionalLightHandlers[i];
+        mDirectionalLightHandlers[i].mColorHandler = glGetUniformLocation(mShaderHandler, ("mDirectionalLights["+to_string(i)+"].mLightColor").c_str());
+        mDirectionalLightHandlers[i].mDirectionHandler = glGetUniformLocation(mShaderHandler, ("mDirectionalLights["+to_string(i)+"].mLightDirection").c_str());
+        mDirectionalLightHandlers[i].mIsEnabledHandler = glGetUniformLocation(mShaderHandler, ("mDirectionalLights["+to_string(i)+"].mIsEnabled").c_str());
     }
 }
 
@@ -43,16 +53,40 @@ void BaseShaderHandler::SendMVP(const mat4& _model, const mat4& _view, const mat
 void BaseShaderHandler::SendLights()
 {
     LightManager* _lightManager = LightManager::Instance();
-    vector<PointLight*> _pointLights = _lightManager->GetLights();
-    for(int i = 0; i < NB_POINT_LIGHTS && i<_pointLights.size(); ++i)
+    //PointLights
+    vector<PointLight*> _pointLights = _lightManager->GetPointLights();
+    for(int i = 0; i < NB_POINT_LIGHTS; ++i)
     {
         PointLightHandlers _pointLightHandlers = mPointLightHandlers[i];
-        PointLight* _pointLight = _pointLights[i];
-        glUniform3fv(_pointLightHandlers.mPositionHandler, 1, glm::value_ptr(_pointLight->GetWorldPosition()));
-        glUniform3fv(_pointLightHandlers.mColorHandler, 1, glm::value_ptr(_pointLight->GetColor()));
-        glUniform1f(_pointLightHandlers.mPowerHandler, _pointLight->GetIntensity());
-        glUniform1i(_pointLightHandlers.mIsEnabledHandler, _pointLight->IsEnabled());
+        PointLight* _pointLight = i<_pointLights.size() ? _pointLights[i] : nullptr;
+        SendVec3(_pointLight ? _pointLight->GetWorldPosition() : vec3(0), _pointLightHandlers.mPositionHandler);
+        SendVec3(_pointLight ? _pointLight->GetColor() : vec3(0), _pointLightHandlers.mColorHandler);
+        SendFloat(_pointLight ? _pointLight->GetIntensity() : 0, _pointLightHandlers.mPowerHandler);
+        SendInt(_pointLight ? _pointLight->IsEnabled() : false, _pointLightHandlers.mIsEnabledHandler);
     }
+
+    //DirectionalLights
+    vector<DirectionalLight*> _directionalLights = _lightManager->GetDirectionalLights();
+    for(int i = 0; i < NB_POINT_LIGHTS; ++i)
+    {
+        DirectionalLightHandlers _directionalLightHandlers = mDirectionalLightHandlers[i];
+        DirectionalLight* _directionalLight = i<_directionalLights.size() ? _directionalLights[i] : nullptr;
+
+        SendVec3(_directionalLight ? _directionalLight->GetColor() : vec3(0), _directionalLightHandlers.mColorHandler);
+        SendVec3(_directionalLight ? _directionalLight->GetDirection() : vec3(0), _directionalLightHandlers.mDirectionHandler);
+        SendInt(_directionalLight ? _directionalLight->IsEnabled() : false, _directionalLightHandlers.mIsEnabledHandler);
+    }
+}
+
+void BaseShaderHandler::SendCameraPosition()
+{
+    Camera* _camera = Engine::Instance()->GetViewportCamera();
+    SendVec3(_camera->GetWorldPosition(), mCameraPositionHandler);
+}
+
+void BaseShaderHandler::SendSkybox()
+{
+    
 }
 
 void BaseShaderHandler::SendTexture(int _typeTexture, int _offsetSlot, unsigned int _texture, int _handler)

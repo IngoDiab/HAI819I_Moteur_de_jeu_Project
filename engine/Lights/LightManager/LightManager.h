@@ -9,21 +9,38 @@ using namespace glm;
 using namespace std;
 
 #include "engine/Utils/Singleton/Singleton.h"
-#include "engine/Lights/PointLight/PointLight.h"
+#include "engine/Objects/Object/Object.h"
+class PointLight;
+class DirectionalLight;
 
 class LightManager final : public Singleton<LightManager>
 {
 protected:
-	vector<PointLight*> mSceneLights = vector<PointLight*>();
+	vector<PointLight*> mScenePointLights = vector<PointLight*>();
+	vector<DirectionalLight*> mSceneDirectionalLights = vector<DirectionalLight*>();
 
 public:
-	vector<PointLight*> GetLights() {return mSceneLights;}
+	vector<PointLight*> GetPointLights() {return mScenePointLights;}
+	vector<DirectionalLight*> GetDirectionalLights() {return mSceneDirectionalLights;}
 
 public:
-	void AddLight(PointLight* _light);
-	void RemoveLight(PointLight* _light);
-	bool Exists(PointLight* _light) const;
+	void AddPointLight(PointLight* _light);
+	void AddDirectionalLight(DirectionalLight* _light);
 
-// public:
-// 	void DeleteLightsSpecificDurability(const DURABILITY _durability);
+	void RemovePointLight(PointLight* _light);
+	void RemoveDirectionalLight(DirectionalLight* _light);
+
+	void DeleteAll();
+	void DeleteLightsSpecificDurability(const DURABILITY _durability);
+	
+	template <typename T>
+	bool Exists(vector<T*> _lights, T* _light) const;
 };
+
+template <typename T>
+bool LightManager::Exists(vector<T*> _lights, T* _light) const
+{
+    for(T* _lightInScene : _lights)
+        if(_lightInScene == _light) return true;
+    return false;
+}

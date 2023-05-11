@@ -12,14 +12,23 @@ using namespace std;
 #include "engine/Scenes/SceneManager/SceneManager.h"
 #include "engine/Lights/LightManager/LightManager.h"
 #include "engine/Physic/PhysicManager/PhysicManager.h"
+#include "engine/Game/Manager/GameManager.h"
 #include "engine/Utils/Singleton/Singleton.h"
 #include "engine/Buffers/VAO/VAO.h"
 
 class Window;
 class Camera;
 
+enum class LAUNCH_MOD
+{
+    ENGINE = 0,
+    GAME = 1
+};
+
 class Engine final : public Singleton<Engine>
 {
+    LAUNCH_MOD mLaunchMod;
+
     float mDeltaTime = 0.0f;	// time between current frame and last frame
     float mLastFrame = 0.0f;
 
@@ -38,6 +47,7 @@ class Engine final : public Singleton<Engine>
     SceneManager mSceneManager;
     LightManager mLightManager;
     PhysicManager mPhysicManager;
+    GameManager mGameManager;
 
 public:
     float DeltaTime() const {return mDeltaTime;}
@@ -46,13 +56,19 @@ public:
     void SetWindow(Window* const _window) {mMainWindow = _window;};
 
     Camera* GetViewportCamera() const {return mActiveCamera;};
+    LAUNCH_MOD GetLaunchMod() const {return mLaunchMod;}
 
 public:
-    Engine();
+    Engine(LAUNCH_MOD _launchMod, const int _widthWindow, const int _heightWindow, const string& _nameWindow);
     ~Engine();
 
 public:
-    void Initialize(const int _widthWindow, const int _heightWindow, const string& _nameWindow);
+    void CreateWindow(const int _widthWindow, const int _heightWindow, const string& _nameWindow);
+    void CreateSkybox();
+    void CreateEditorCamera();
+    void GenerateVAO();
+    void InitializeMouseManager();
+
     void Run();
     void CalculateDeltaTime();
 
