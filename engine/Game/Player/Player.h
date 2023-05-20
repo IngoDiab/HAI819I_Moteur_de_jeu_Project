@@ -16,12 +16,12 @@ class Player final : public GameObject
 
     float mouseSensivity = 3;
 
-    float forwardThrust = 35;
-    float brakeForce = 1; float brakeMinForce = 25;
+    float forwardThrust = 75;
+    float brakeForce = 10; float brakeMinForce = 25;
     float brakeLimit = 0.1f;
     float brakeRatio = 0.05f; float brakeCurve = 2;
 
-    float mShotPower = 200;
+    float mShotPower = 2000;
 public:
     Player();
 

@@ -45,7 +45,7 @@ public:
     T* CreateMesh();
 
     template<typename T>
-    T* CreateMesh(const string& _meshPath);
+    T* CreateMesh(const string& _meshPath, const bool _loadMaterials = true);
 
     template<typename T>
     T* AddLOD(double _distanceLOD, int _vertexDim1, int _vertexDim2);
@@ -79,7 +79,7 @@ T* MeshComponent::CreateMesh()
 }
 
 template<typename T>
-T* MeshComponent::CreateMesh(const string& _meshPath)
+T* MeshComponent::CreateMesh(const string& _meshPath, const bool _loadMaterials)
 {
     T* _meshCreated = new T();
     Mesh* _mesh = dynamic_cast<Mesh*>(_mesh);
@@ -95,7 +95,7 @@ T* MeshComponent::CreateMesh(const string& _meshPath)
 
     // mLODS[0] = _meshCreated;
     delete _meshCreated;
-    AssimpLoader::LoadAssimp(_meshPath, mMeshs, mMaterials);
+    AssimpLoader::LoadAssimp(_meshPath, mMeshs, mMaterials, _loadMaterials);
     return _meshCreated;
 }
 

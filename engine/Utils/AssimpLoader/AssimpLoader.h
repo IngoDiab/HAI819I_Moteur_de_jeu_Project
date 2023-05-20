@@ -18,10 +18,10 @@ class aiMaterial;
 class AssimpLoader
 {
 public:
-    static void LoadAssimp(const string& _assimpPath, vector<Mesh*>& _meshs, vector<Material*>& _materials);
+    static void LoadAssimp(const string& _assimpPath, vector<Mesh*>& _meshs, vector<Material*>& _materials, const bool _loadMaterials);
     static mat4 ASSIMP_To_GLM(const aiMatrix4x4& _matrix);
 
 private:
-    static void LoadNodeMeshesMaterials(const string& _texturesPath, const aiScene* _aiScene, const aiNode* _node, const aiMatrix4x4& _parentTransformation, vector<Mesh*>& _meshes, vector<Material*>& _materials);
+    static void LoadNodeMeshesMaterials(const bool _loadMaterials, const string& _texturesPath, const aiScene* _aiScene, const aiNode* _node, const aiMatrix4x4& _parentTransformation, vector<Mesh*>& _meshes, vector<Material*>& _materials);
     static Material* LoadMaterialAssimp(const string& _texturesPath, const aiMaterial* _aiMaterial);
 };

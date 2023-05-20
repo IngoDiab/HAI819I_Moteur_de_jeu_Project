@@ -15,36 +15,21 @@ Planet::Planet()
 
     mBoxCollider = AddComponent<BoxCollider>();
     mBoxCollider->SetSize(vec3(3));
-    mBoxCollider->SetTrigger(false);
-    // mBoxCollider->SetOnTriggerEnterCallback([&](CollisionData _data) 
-    // {
-    //     GameManager* _gameManager = GameManager::Instance();
-    //     _gameManager->SetPlanetToEnter(this); 
-    // });
-    // mBoxCollider->SetOnTriggerExitCallback([&](CollisionData _data) 
-    // {
-    //     GameManager* _gameManager = GameManager::Instance();
-    //     _gameManager->SetPlanetToEnter(nullptr); 
-    // });
-
-    mBoxCollider->SetOnCollisionCallback([&](CollisionData _data) 
-    {
-        ObjectManager* _objectManager = ObjectManager::Instance();
-        _objectManager->Destroy(this); 
-    });
+    mBoxCollider->SetTrigger(true);
+    
     mPhysicComponent = AddComponent<PhysicComponent>();
     mPhysicComponent->EnableGravity(false);
     mPhysicComponent->ActiveClip(false);
 
-    mPhysicComponent->SetCollisionType(COLLISION_TYPE::ASTEROID);
-    mPhysicComponent->AddIgnoredCollisionType({COLLISION_TYPE::ASTEROID, COLLISION_TYPE::PLANET, COLLISION_TYPE::PLAYER});
+    mPhysicComponent->SetCollisionType(COLLISION_TYPE::PLANET);
+    mPhysicComponent->AddIgnoredCollisionType({COLLISION_TYPE::ASTEROID, COLLISION_TYPE::PLANET, COLLISION_TYPE::PROJECTILE, COLLISION_TYPE::TROPHY});
 }
 
 void Planet::Update(const float _deltaTime)
 {
     GameObject::Update(_deltaTime);
-    // RotateAroundParent(_deltaTime);
-    // RotateAroundAxis(_deltaTime);
+    RotateAroundParent(_deltaTime);
+    RotateAroundAxis(_deltaTime);
 }
 
 void Planet::RotateAroundParent(const float _deltaTime)

@@ -28,8 +28,9 @@ Projectile::Projectile()
     mPhysicComponent = AddComponent<PhysicComponent>();
     mPhysicComponent->EnableGravity(false);
     mPhysicComponent->SetFriction(1);
+    mPhysicComponent->SetMaxVelocity(-1);
     mPhysicComponent->SetCollisionType(COLLISION_TYPE::PROJECTILE);
-    mPhysicComponent->AddIgnoredCollisionType({COLLISION_TYPE::PLAYER, COLLISION_TYPE::PROJECTILE, COLLISION_TYPE::PLANET});
+    mPhysicComponent->AddIgnoredCollisionType({COLLISION_TYPE::PLAYER, COLLISION_TYPE::PROJECTILE, COLLISION_TYPE::TROPHY});
 }
 
 void Projectile::Launch(const vec3& _direction, const float _power)

@@ -7,14 +7,14 @@
 #include <assimp/Importer.hpp> 
 #include <assimp/postprocess.h> 
 
-void AssimpLoader::LoadAssimp(const string& _assimpPath, vector<Mesh*>& _meshs, vector<Material*>& _materials)
+void AssimpLoader::LoadAssimp(const string& _assimpPath, vector<Mesh*>& _meshs, vector<Material*>& _materials, const bool _loadMaterials)
 {
     Assimp::Importer _importer;
     const aiScene* _aiScene = _importer.ReadFile(_assimpPath.c_str(), aiProcess_Triangulate | aiProcess_GenSmoothNormals | aiProcess_FlipUVs | aiProcess_JoinIdenticalVertices);
     if(!_aiScene) return;
 
     string _texturesPath = _assimpPath.substr(0,_assimpPath.find_last_of('/'))+"/Textures/";
-    LoadNodeMeshesMaterials(_texturesPath, _aiScene, _aiScene->mRootNode, aiMatrix4x4(), _meshs, _materials);
+    LoadNodeMeshesMaterials(_loadMaterials, _texturesPath, _aiScene, _aiScene->mRootNode, aiMatrix4x4(), _meshs, _materials);
 }
 
 mat4 AssimpLoader::ASSIMP_To_GLM(const aiMatrix4x4& _matrix)
@@ -26,7 +26,7 @@ mat4 AssimpLoader::ASSIMP_To_GLM(const aiMatrix4x4& _matrix)
         (double)_matrix.a4, (double)_matrix.b4, (double)_matrix.c4, (double)_matrix.d4
     );
 }
-void AssimpLoader::LoadNodeMeshesMaterials(const string& _texturesPath, const aiScene* _aiScene, const aiNode* _node, const aiMatrix4x4& _parentTransformation, vector<Mesh*>& _meshes, vector<Material*>& _materials)
+void AssimpLoader::LoadNodeMeshesMaterials(const bool _loadMaterials, const string& _texturesPath, const aiScene* _aiScene, const aiNode* _node, const aiMatrix4x4& _parentTransformation, vector<Mesh*>& _meshes, vector<Material*>& _materials)
 {
     unsigned int* _meshesInNode =_node->mMeshes;
     unsigned int _nbMeshesInNode =_node->mNumMeshes;
@@ -69,6 +69,7 @@ void AssimpLoader::LoadNodeMeshesMaterials(const string& _texturesPath, const ai
         _mesh->RefreshVBOData(VERTEX_ATTRIBUTE::VERTEX_INDICES);
 
         _meshes.push_back(_mesh);
+        if(!_loadMaterials) continue;
 
         aiMaterial* _aiMaterial = _aiScene->mMaterials[_loadedMesh->mMaterialIndex];
         _materials.push_back(LoadMaterialAssimp(_texturesPath, _aiMaterial));
@@ -77,7 +78,7 @@ void AssimpLoader::LoadNodeMeshesMaterials(const string& _texturesPath, const ai
     aiNode** _nodeChildren = _node->mChildren;
     unsigned int _nbNodeChildren = _node->mNumChildren;
     for(unsigned int i = 0; i<_nbNodeChildren; ++i)
-        LoadNodeMeshesMaterials(_texturesPath, _aiScene, _nodeChildren[i], _localTransformationASSIMP, _meshes, _materials);
+        LoadNodeMeshesMaterials(_loadMaterials, _texturesPath, _aiScene, _nodeChildren[i], _localTransformationASSIMP, _meshes, _materials);
 }
 
 Material* AssimpLoader::LoadMaterialAssimp(const string& _texturesPath, const aiMaterial* _aiMaterial)

@@ -22,6 +22,8 @@
 
 #define SPACE_SKYBOX "Textures/Skybox/Space4K/"
 
-#define GRASS_TEXTURE "Textures/2D/grass.png"
-#define ROCK_TEXTURE "Textures/2D/rock.png"
-#define SNOWROCKS_TEXTURE "Textures/2D/snowrocks.png"
+#define GRASS_TEXTURE "Textures/2D/grass_ground.png"
+#define ROCK_TEXTURE "Textures/2D/rocks_ground.jpg"
+#define SNOWROCKS_TEXTURE "Textures/2D/snow.png"
+
+#define MOON_GROUND_TEXTURE "Textures/2D/moon_ground.png"

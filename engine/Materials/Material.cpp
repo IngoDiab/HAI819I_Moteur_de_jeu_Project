@@ -26,6 +26,7 @@ void Material::Initialize()
     mColors[(int)COLOR_SLOT::AMBIENT] = vec3(.01f);
     mColors[(int)COLOR_SLOT::DIFFUSE] = vec3(1);
 
+    mCoeffs[(int)COEFF_SLOT::SHININESS] = 1;
     mCoeffs[(int)COEFF_SLOT::TILING] = 1;
 }
 

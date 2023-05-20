@@ -1,9 +1,7 @@
 #include "engine/Engine/Engine.h"
 #include "engine/Game/Scenes/SceneMain.h"
 #include "engine/Game/Scenes/Scene_Earth.h"
-//TODO Keyboard QWERTY->AZERTY
-//TODO Renderer unload only scene
-//TODO ShaderManager unload only scene
+#include "engine/Game/Scenes/Scene_Moon.h"
 
 int main(int argc, char** argv)
 {
@@ -15,6 +13,9 @@ int main(int argc, char** argv)
 
     Scene_Earth _earth = Scene_Earth();
     _sceneManager->AddScene("Earth",&_earth);
+
+    Scene_Moon _moon = Scene_Moon();
+    _sceneManager->AddScene("Moon",&_moon);
 
     _sceneManager->LoadScene("MAIN");
     _engine.Run();

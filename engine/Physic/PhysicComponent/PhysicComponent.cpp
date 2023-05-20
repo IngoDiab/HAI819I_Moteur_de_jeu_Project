@@ -27,7 +27,7 @@ void PhysicComponent::Destroy()
 
 void PhysicComponent::ApplyVelocity(const float _deltaTime)
 {
-    mLastPosition = mOwner->GetTransformInstance()->GetTransformData()->mWorldPosition;
+    mLastPosition = mOwner->GetTransformInstance()->GetTransformData()->mLocalPosition;
 
     //Forces
     mAcceleration = mForces/mMass;
@@ -47,6 +47,9 @@ void PhysicComponent::ApplyVelocity(const float _deltaTime)
 
     if(length(mAcceleration) < MIN_VELOCITY) mAcceleration = vec3(0);
     if(length(mVelocity) < MIN_VELOCITY) mVelocity = vec3(0);
+
+    if(mMaxVelocitySpeed >= 0 && length(mVelocity) > mMaxVelocitySpeed)
+    mVelocity = normalize(mVelocity) * mMaxVelocitySpeed;
 
     //Update position
     vec3 _newPosition = mLastPosition + mVelocity*_deltaTime;

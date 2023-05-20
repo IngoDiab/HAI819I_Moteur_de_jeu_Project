@@ -4,7 +4,7 @@
 void GameManager::AddScenePlanet(Planet* _planet, const string& _name)
 {
     mScenePlanets[_planet] = _name;
-} 
+}
 
 void GameManager::EnterPlanet(bool _pressed)
 {

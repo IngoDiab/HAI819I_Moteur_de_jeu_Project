@@ -15,7 +15,8 @@ enum class COLLISION_TYPE
     PLAYER,
     ASTEROID,
     PLANET,
-    PROJECTILE
+    PROJECTILE,
+    TROPHY
 };
 
 class PhysicComponent : public Component
@@ -28,6 +29,8 @@ class PhysicComponent : public Component
     vec3 mGravityAcceleration = vec3(0);
 
 protected:
+    float mMaxVelocitySpeed = 200;
+
     bool mReadyToCollide = false;
     Collider* mCollider = nullptr;
     vec3 mForces = vec3(0);
@@ -55,6 +58,8 @@ public:
     bool IsReadyToCollide() const {return mReadyToCollide;}
     bool IsStatic() const {return mIsStatic;}
     float GetBounciness() const {return mBounciness;}
+
+    void SetMaxVelocity(float _max) { mMaxVelocitySpeed = _max;}
 
     void SetReadyToCollide(bool _ready) {mReadyToCollide = _ready;}
     void SetStatic(bool _static) {mIsStatic = _static;}

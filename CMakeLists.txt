@@ -177,8 +177,12 @@ add_executable(engine
 
 	engine/Game/Scenes/SceneMain.h
 	engine/Game/Scenes/SceneMain.cpp
+	engine/Game/Asteroid/Asteroid.h
+	engine/Game/Asteroid/Asteroid.cpp
 	engine/Game/Scenes/Scene_Earth.h
 	engine/Game/Scenes/Scene_Earth.cpp
+	engine/Game/Scenes/Scene_Moon.h
+	engine/Game/Scenes/Scene_Moon.cpp
 	engine/Game/Player/Player.h
 	engine/Game/Player/Player.cpp
 	engine/Game/Player/Ground_Player.h
@@ -189,6 +193,8 @@ add_executable(engine
 	engine/Game/Manager/GameManager.cpp
 	engine/Game/Weapon/Projectile.h
 	engine/Game/Weapon/Projectile.cpp
+	engine/Game/Collectibles/Trophy.h
+	engine/Game/Collectibles/Trophy.cpp
 	
 	engine/ShaderHandlers/BaseShaderHandler/BaseShaderHandler.h
 	engine/ShaderHandlers/BaseShaderHandler/BaseShaderHandler.cpp

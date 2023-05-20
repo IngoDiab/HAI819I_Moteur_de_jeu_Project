@@ -26,7 +26,7 @@ Player::Player()
     }
 
     mBoxCollider = AddComponent<BoxCollider>();
-    mBoxCollider->SetSize(vec3(1));
+    mBoxCollider->SetSize(vec3(10));
 
     mPhysicComponent = AddComponent<PhysicComponent>();
     mPhysicComponent->EnableGravity(false);
@@ -41,12 +41,10 @@ Player::Player()
 
     InputManager* _inputManager = InputManager::Instance();
 
-    _inputManager->BindAxis({{GLFW_KEY_UP,GLFW_KEY_DOWN}}, this, (void* (Object::*)(float))&Player::ApplyThrustForward);
-
-    _inputManager->BindKey(GLFW_KEY_SPACE,ACTION_TYPE::HOLD, this, (void* (Object::*)(bool))&Player::Brake);
-
+    _inputManager->BindAxis({{GLFW_KEY_W,GLFW_KEY_S}}, this, (void* (Object::*)(float))&Player::ApplyThrustForward);
     _inputManager->BindAxis({{MOUSE_X,MOUSE_X}}, this, (void* (Object::*)(float))&Player::TurnY);
     _inputManager->BindAxis({{MOUSE_Y,MOUSE_Y}}, this, (void* (Object::*)(float))&Player::TurnX);
+    _inputManager->BindKey(GLFW_KEY_SPACE,ACTION_TYPE::HOLD, this, (void* (Object::*)(bool))&Player::Brake);
 
     GameManager* _gm = GameManager::Instance();
     _inputManager->BindKey(GLFW_KEY_E,ACTION_TYPE::PRESS, _gm, (void* (Object::*)(bool))&GameManager::EnterPlanet);
@@ -77,7 +75,7 @@ void Player::Shoot(bool _shootPressed)
 
 void Player::TurnX(float v)
 {
-    mTransform.RotateLocalAxisX(v * mouseSensivity * Engine::Instance()->DeltaTime());
+    mTransform.RotateLocalAxisX(-v * mouseSensivity * Engine::Instance()->DeltaTime());
 }
 
 void Player::TurnY(float v)
@@ -99,11 +97,7 @@ void Player::Brake(bool b)
 
 void Player::ApplyThrustForward(float force)
 {
-    //cout << "PLayer" <<  mTransform.GetPosition().x << "  " << mTransform.GetPosition().y << "  " << mTransform.GetPosition().z << //endl;
-    //cout << "Camera" <<  mCamera->GetWorldPosition().x << "  " << mCamera->GetWorldPosition().y << "  " << mCamera->GetWorldPosition().z << endl;
-    //cout << mPhysicComponent->GetVelocity().x << "  " <<  mPhysicComponent->GetVelocity().y << "  " <<  mPhysicComponent->GetVelocity().z << endl;
     mPhysicComponent->AddVelocity(mCamera->GetTransform().mForwardVector * forwardThrust * force * Engine::Instance()->DeltaTime());
-
     UpdateFOV();
 }
 

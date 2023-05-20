@@ -18,7 +18,7 @@ protected:
 
     vector<unsigned int> mLayers = vector<unsigned int>(15);
     vector<float> mHeightsTransition = vector<float>(14);
-    float mTransitionThreshold = 10;
+    float mTransitionThreshold = 20;
     
     int mTiling = 20;
 

@@ -30,6 +30,7 @@ public:
 
 public:
     MeshComponent* GetMeshComponent() const {return mMeshComponent;}
+    BoxCollider* GetBoxCollider() const {return mBoxCollider;}
 
 public:
     virtual void Update(const float _deltaTime) override;

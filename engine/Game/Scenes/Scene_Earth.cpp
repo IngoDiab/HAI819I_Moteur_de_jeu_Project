@@ -8,9 +8,10 @@
 #include "engine/Inputs/InputManager/InputManager.h"
 #include "engine/Camera/EditorCamera/EditorCamera.h"
 #include "engine/Components/MeshComponent/MeshComponent.h"
+#include "engine/Physic/BoxCollider/BoxCollider.h"
 #include "engine/Engine/Engine.h"
 
-
+#include "engine/Game/Collectibles/Trophy.h"
 #include "engine/Lights/LightManager/LightManager.h"
 
 void Scene_Earth::LoadScene()
@@ -33,6 +34,8 @@ void Scene_Earth::LoadScene()
     DirectionalLight* _sunLight = _objectManager->Create<DirectionalLight>();
     _sunLight->SetColor(vec3(1));
     _sunLight->SetDirection(vec3(1,-1,1));
+
+    CreateTrophy();
 }
 
 Ground_Player* Scene_Earth::CreateCharacter()
@@ -52,6 +55,20 @@ Spaceship* Scene_Earth::CreateSpaceship()
     return _spaceship;
 }
 
+Trophy* Scene_Earth::CreateTrophy()
+{
+    if(!mCollectibleAvailable) return nullptr;
+    ObjectManager* _objectManager = ObjectManager::Instance();
+    Trophy* _trophy = _objectManager->Create<Trophy>(vec3(-766.435f, 437.863f, -2304.98f));
+    _trophy->GetCollider()->SetOnTriggerEnterCallback([=](CollisionData _data) 
+    {
+        mCollectibleAvailable = false;
+        _objectManager->Destroy(_trophy); 
+    });
+
+    return _trophy;
+}
+
 Landscape* Scene_Earth::CreateLandscape()
 {
     ObjectManager* _objectManager = ObjectManager::Instance();
@@ -63,11 +80,11 @@ Landscape* Scene_Earth::CreateLandscape()
     _landscapeMaterial->AddLayer(0, GRASS_TEXTURE);
     _landscapeMaterial->AddLayer(1, ROCK_TEXTURE);
     _landscapeMaterial->AddLayer(2, SNOWROCKS_TEXTURE);
-    _landscapeMaterial->SetTiling(100);
+    _landscapeMaterial->SetTiling(75);
 
     // _landscapeMaterial->AddTransition(0, 50);
     // _landscapeMaterial->AddTransition(1, 80);
-    _landscapeMaterial->AddTransition(0, 70);
+    _landscapeMaterial->AddTransition(0, 90);
     _landscapeMaterial->AddTransition(1, 225);
     return _landscape;
 }

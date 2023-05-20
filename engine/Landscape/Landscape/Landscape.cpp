@@ -10,10 +10,6 @@ Landscape::Landscape()
 {
     CreateLandscapeMesh();
     CreateLandscapeMaterial();
-    // mBoxCollider = AddComponent<BoxCollider>();
-    // mPhysicComponent = AddComponent<PhysicComponent>();
-    // mPhysicComponent->EnableGravity(false);
-    // mPhysicComponent->SetStatic(true);
 }
 
 Landscape::~Landscape()

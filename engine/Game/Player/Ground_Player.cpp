@@ -15,12 +15,8 @@
 Ground_Player::Ground_Player()
 {
     mMeshComponent = AddComponent<MeshComponent>(vec3(0), vec3(0), vec3(.1));
-    mMeshComponent->CreateMesh<Mesh>("3DModels/Asteroid/scene.gltf");
-    mMeshComponent->AddLOD<Sphere>(100, 10,10);
-    mMeshComponent->AddLOD<Sphere>(200, 4,4);
-    mMeshComponent->CreateMaterial<Material>(PHONG_VERTEX, PHONG_FRAG);
     mBoxCollider = AddComponent<BoxCollider>();
-    mBoxCollider->SetSize(vec3(10));
+    mBoxCollider->SetSize(vec3(10,30,10));
     
     mPhysicComponent = AddComponent<PhysicComponent>();
 
@@ -32,6 +28,19 @@ Ground_Player::Ground_Player()
     InputManager* _inputManager = InputManager::Instance();
     GameManager* _gm = GameManager::Instance();
     _inputManager->BindKey(GLFW_KEY_Q,ACTION_TYPE::PRESS, _gm, (void* (Object::*)(bool))&GameManager::SpaceTravel);
+    _inputManager->BindKey(GLFW_KEY_LEFT_SHIFT,ACTION_TYPE::HOLD, this, (void* (Object::*)(bool))&Ground_Player::RunSpeed);
+}
+
+void Ground_Player::Update(const float _tickSpeed)
+{
+    GameObject::Update(_tickSpeed);
+    UpdatePlayerSpeed(_tickSpeed);
+}
+
+void Ground_Player::UpdatePlayerSpeed(const float _tickSpeed)
+{
+    if(mMovementSpeed < mTargetSpeed) mMovementSpeed = (1-_tickSpeed*mAcceleration)*mMovementSpeed + _tickSpeed*mAcceleration*mTargetSpeed;
+    else mMovementSpeed = (1-_tickSpeed*mDeceleration)*mMovementSpeed + _tickSpeed*mDeceleration*mTargetSpeed;
 }
 
 Camera* Ground_Player::CreatePlayerCamera()
@@ -104,4 +113,9 @@ void Ground_Player::ClipToLandscape(Landscape* const _landscape)
     mPhysicComponent->ActiveClip(true);
     mPhysicComponent->EnableGravity(false);
     mPhysicComponent->ClipObject(_landscape);
+}
+
+void Ground_Player::RunSpeed(const bool _pressed)
+{
+    mTargetSpeed = _pressed ? mRunSpeed : mWalkSpeed;
 }

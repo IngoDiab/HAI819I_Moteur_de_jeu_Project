@@ -62,7 +62,6 @@ public:
 
 public:
     virtual void Update(const float _tickSpeed) override;
-    //void UpdateModelMatrix();
     virtual void LateUpdate(const float _tickSpeed) override;
     virtual void Destroy();
 

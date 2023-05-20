@@ -23,11 +23,20 @@ class Ground_Player : public GameObject, public IMoving, public IRotating
 
     float mHeightJump = 50;
 
+    float mTargetSpeed = 50;
+
+    float mRunSpeed = 150;
+    float mWalkSpeed = 50;
+    float mAcceleration = 1;
+    float mDeceleration = 10;
+
 public:
     Ground_Player();
+    virtual void Update(const float _tickSpeed) override;
 
 private:
     Camera* CreatePlayerCamera();
+    void UpdatePlayerSpeed(const float _tickSpeed);
 
 public:
     virtual void MoveLateral(const float _move) override;
@@ -41,6 +50,8 @@ public:
     virtual void RotateLocalAxisX(float _rotation) override;
     virtual void RotateLocalAxisY(float _rotation) override;
     virtual void RotateLocalAxisZ(float _rotation) override;
+
+    void RunSpeed(const bool _pressed);
 
 public:
     void ClipToLandscape(Landscape* const _landscape);
