@@ -156,6 +156,7 @@ CollisionData BoxCollider::CollideSphere(SphereCollider* _other)
 
 void BoxCollider::Render(Camera* _renderingCamera)
 {
+    if(!mCanBeRendered) return;
     //Calculate MVP
     const mat4& _modelMatrix = mat4(1.0);
     const mat4& _viewMatrix = _renderingCamera->GetViewMatrix();

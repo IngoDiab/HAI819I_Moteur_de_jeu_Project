@@ -12,7 +12,7 @@ using namespace std;
 class Collider : public Component, public IRenderable
 {
 protected:
-    bool mCanBeRendered = true;
+    bool mCanBeRendered = false;
     bool mIsTrigger = false;
     map<Collider*, CollisionData> mLastFrameColliderInContact = map<Collider*, CollisionData>();
     map<Collider*, CollisionData> mColliderInContact = map<Collider*, CollisionData>();

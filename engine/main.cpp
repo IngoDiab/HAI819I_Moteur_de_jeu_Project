@@ -5,7 +5,7 @@
 
 int main(int argc, char** argv)
 {
-    Engine _engine = Engine(LAUNCH_MOD::GAME, 1920, 1080, "Engine");
+    Engine _engine = Engine(LAUNCH_MOD::GAME, 1920, 1080, "Space Explorer");
 
     SceneManager* _sceneManager = SceneManager::Instance();
     SceneMain _sceneMain = SceneMain();

@@ -57,15 +57,6 @@ add_definitions(
 # engine
 add_executable(engine
 
-	engine/Scenes/TP1/SceneTP1.h
-	engine/Scenes/TP1/SceneTP1.cpp
-	engine/Scenes/TP2/SceneTP2.h
-	engine/Scenes/TP2/SceneTP2.cpp
-	engine/Scenes/TP3/SceneTP3.h
-	engine/Scenes/TP3/SceneTP3.cpp
-	engine/Scenes/TP4/SceneTP4.h
-	engine/Scenes/TP4/SceneTP4.cpp
-	
 	common/shader.cpp
 	common/shader.hpp
 	common/controls.cpp
@@ -90,9 +81,6 @@ add_executable(engine
 	engine/Camera/EditorCamera/EditorCamera.cpp
 	engine/Camera/OrbitalCamera/OrbitalCamera.h
 	engine/Camera/OrbitalCamera/OrbitalCamera.cpp
-	
-	engine/Character/Character.h
-	engine/Character/Character.cpp
 	
 	engine/Components/Component/Component.h
 	engine/Components/Component/Component.cpp
