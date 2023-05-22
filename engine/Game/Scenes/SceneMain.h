@@ -34,6 +34,7 @@ private :
     Asteroid* CreateAsteroid(const vec3& _centerPos, const vec3& _position, const vec3& _scale);
     void CreateEarth(Planet* _parent);
     void CreateMoon(Planet* _parent);
+    void CreateMars(Planet* _parent);
 
     Player* CreatePlayer();
     Trophy* CreateTrophy(const vec3& _position);

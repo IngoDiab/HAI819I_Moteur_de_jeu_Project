@@ -41,9 +41,10 @@ void SceneMain::CreateSolarSystem()
     _material->SetValueCoefficients(COEFF_SLOT::EMISSIVNESS, 1);
 
     PointLight* _sunLight = _objectManager->Create<PointLight>(vec3(0), vec3(0), vec3(1), _sun);
-    _sunLight->SetIntensity(500000);
+    _sunLight->SetIntensity(10000000);
 
     CreateEarth(_sun);
+    CreateMars(_sun);
 
     int _nbAsteroids = 16;
     mAsteroids.resize(_nbAsteroids);
@@ -154,6 +155,33 @@ void SceneMain::CreateMoon(Planet* _parent)
     {
         GameManager* _gameManager = GameManager::Instance();
         _gameManager->SetPlanetToEnter(_moon); 
+        _gameManager->EnableSpaceTravel(true); 
+    });
+    _collider->SetOnTriggerExitCallback([=](CollisionData _data) 
+    {
+        GameManager* _gameManager = GameManager::Instance();
+        _gameManager->SetPlanetToEnter(nullptr); 
+        _gameManager->EnableSpaceTravel(false);
+    });
+}
+
+void SceneMain::CreateMars(Planet* _parent)
+{   
+    ObjectManager* _objectManager = ObjectManager::Instance();
+    Planet* _mars = _objectManager->Create<Planet>(vec3(0), vec3(0,0,23.44f), vec3(.1f), _parent);
+    Material* _material = _mars->GetMeshComponent()->GetMaterial(0);
+    _material->SetTexture(TEXTURE_SLOT::ALBEDO, "Textures/2D/mars.jpg");
+    _mars->SetRevolutionSpeed(1);
+    _mars->SetDistanceCenter(2000);
+
+    GameManager* _gm = GameManager::Instance();
+    _gm->AddScenePlanet(_mars, "Mars");
+
+    BoxCollider* _collider = _mars->GetBoxCollider();
+    _collider->SetOnTriggerEnterCallback([=](CollisionData _data) 
+    {
+        GameManager* _gameManager = GameManager::Instance();
+        _gameManager->SetPlanetToEnter(_mars); 
         _gameManager->EnableSpaceTravel(true); 
     });
     _collider->SetOnTriggerExitCallback([=](CollisionData _data) 

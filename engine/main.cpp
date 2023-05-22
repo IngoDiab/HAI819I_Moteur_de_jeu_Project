@@ -2,6 +2,7 @@
 #include "engine/Game/Scenes/SceneMain.h"
 #include "engine/Game/Scenes/Scene_Earth.h"
 #include "engine/Game/Scenes/Scene_Moon.h"
+#include "engine/Game/Scenes/Scene_Mars.h"
 
 int main(int argc, char** argv)
 {
@@ -17,7 +18,10 @@ int main(int argc, char** argv)
     Scene_Moon _moon = Scene_Moon();
     _sceneManager->AddScene("Moon",&_moon);
 
-    _sceneManager->LoadScene("MAIN");
+    Scene_Mars _mars = Scene_Mars();
+    _sceneManager->AddScene("Mars",&_mars);
+
+    _sceneManager->LoadScene("Mars");
     _engine.Run();
     return 0;
 }

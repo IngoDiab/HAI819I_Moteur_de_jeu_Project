@@ -171,6 +171,8 @@ add_executable(engine
 	engine/Game/Scenes/Scene_Earth.cpp
 	engine/Game/Scenes/Scene_Moon.h
 	engine/Game/Scenes/Scene_Moon.cpp
+	engine/Game/Scenes/Scene_Mars.h
+	engine/Game/Scenes/Scene_Mars.cpp
 	engine/Game/Player/Player.h
 	engine/Game/Player/Player.cpp
 	engine/Game/Player/Ground_Player.h

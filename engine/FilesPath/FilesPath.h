@@ -27,3 +27,6 @@
 #define SNOWROCKS_TEXTURE "Textures/2D/snow.png"
 
 #define MOON_GROUND_TEXTURE "Textures/2D/moon_ground.png"
+
+#define MARS_GROUND_TEXTURE1 "Textures/2D/marsTerrain.jpg"
+#define MARS_GROUND_TEXTURE0 "Textures/2D/MarsGround.jpg"
