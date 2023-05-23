@@ -17,7 +17,7 @@
 void Scene_Mars::LoadScene()
 {
     Skybox* _skybox = Skybox::Instance();
-    _skybox->ChangeSkybox("Textures/Skybox/Mars/", ".jpg");
+    _skybox->ChangeSkybox("Textures/Skybox/Mars/", ".png");
 
     mCharacter = CreateCharacter();
     mSpaceship = CreateSpaceship();
@@ -33,7 +33,7 @@ void Scene_Mars::LoadScene()
 
     DirectionalLight* _sunLight = _objectManager->Create<DirectionalLight>();
     _sunLight->SetColor(vec3(1));
-    _sunLight->SetDirection(vec3(0,-1,0));
+    _sunLight->SetDirection(vec3(-1,-1,1));
 
     CreateTrophy();
 }
@@ -42,7 +42,7 @@ Ground_Player* Scene_Mars::CreateCharacter()
 {
     ObjectManager* _objectManager = ObjectManager::Instance();
     Ground_Player* _character = _objectManager->Create<Ground_Player>();
-    _character->SetPosition(vec3(-218.553f,-140.0f,-3994.34f));
+    _character->SetPosition(vec3(-118.553f,-140.0f,-2994.34f));
 
     MeshComponent* _meshComponent = _character->GetComponent<MeshComponent>();
 
@@ -52,7 +52,7 @@ Ground_Player* Scene_Mars::CreateCharacter()
 Spaceship* Scene_Mars::CreateSpaceship()
 {
     ObjectManager* _objectManager = ObjectManager::Instance();
-    Spaceship* _spaceship = _objectManager->Create<Spaceship>(vec3(-218.553f,-140.0f,-3994.34f), vec3(0), vec3(1));
+    Spaceship* _spaceship = _objectManager->Create<Spaceship>(vec3(-218.553f,-140.0f,-2994.34f), vec3(0), vec3(1));
     return _spaceship;
 }
 
@@ -75,7 +75,7 @@ Landscape* Scene_Mars::CreateLandscape()
     ObjectManager* _objectManager = ObjectManager::Instance();
     Landscape* _landscape = _objectManager->Create<Landscape>(vec3(0,-50,0), vec3(0), vec3(10000,1,10000));
     _landscape->ChangeResolution(256,256);
-    _landscape->ApplyHeightmap("Textures/Heightmaps/z",1000000, 100);
+    _landscape->ApplyHeightmap("Textures/Heightmaps/MarsHeightmap.png",1000000, 100);
 
     LandscapeMaterial* _landscapeMaterial= _landscape->GetMaterial();
     _landscapeMaterial->AddLayer(0, MARS_GROUND_TEXTURE0);
