@@ -42,6 +42,7 @@ Ground_Player* Scene_Mars::CreateCharacter()
 {
     ObjectManager* _objectManager = ObjectManager::Instance();
     Ground_Player* _character = _objectManager->Create<Ground_Player>();
+    _character->SetPosition(vec3(-218.553f,-140.0f,-3994.34f));
 
     MeshComponent* _meshComponent = _character->GetComponent<MeshComponent>();
 
@@ -74,7 +75,7 @@ Landscape* Scene_Mars::CreateLandscape()
     ObjectManager* _objectManager = ObjectManager::Instance();
     Landscape* _landscape = _objectManager->Create<Landscape>(vec3(0,-50,0), vec3(0), vec3(10000,1,10000));
     _landscape->ChangeResolution(256,256);
-    _landscape->ApplyHeightmap("Textures/Heightmaps/MarsHeight.png",1000000, 100);
+    _landscape->ApplyHeightmap("Textures/Heightmaps/z",1000000, 100);
 
     LandscapeMaterial* _landscapeMaterial= _landscape->GetMaterial();
     _landscapeMaterial->AddLayer(0, MARS_GROUND_TEXTURE0);

@@ -21,7 +21,7 @@ int main(int argc, char** argv)
     Scene_Mars _mars = Scene_Mars();
     _sceneManager->AddScene("Mars",&_mars);
 
-    _sceneManager->LoadScene("Mars");
+    _sceneManager->LoadScene("MAIN");
     _engine.Run();
     return 0;
 }

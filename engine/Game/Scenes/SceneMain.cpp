@@ -41,7 +41,7 @@ void SceneMain::CreateSolarSystem()
     _material->SetValueCoefficients(COEFF_SLOT::EMISSIVNESS, 1);
 
     PointLight* _sunLight = _objectManager->Create<PointLight>(vec3(0), vec3(0), vec3(1), _sun);
-    _sunLight->SetIntensity(10000000);
+    _sunLight->SetIntensity(2000000);
 
     CreateEarth(_sun);
     CreateMars(_sun);
