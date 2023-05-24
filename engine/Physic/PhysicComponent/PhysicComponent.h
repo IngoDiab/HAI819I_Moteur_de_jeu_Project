@@ -41,7 +41,7 @@ protected:
     float mMass = 1;
     bool mHasGravity = true;
     vec3 mGravityDirection = vec3(0,-1,0);
-    float mGravity = 98.1f;
+    float mGravity = 1000.1f;
 
     Landscape* mClipToLandscape = nullptr;
     float mOffsetClip = 10;

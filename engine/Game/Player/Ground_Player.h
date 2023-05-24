@@ -21,11 +21,11 @@ class Ground_Player : public GameObject, public IMoving, public IRotating
 
     Camera* mPlayerCamera = nullptr;
 
-    float mHeightJump = 50;
+    float mHeightJump = 150;
 
     float mTargetSpeed = 50;
 
-    float mRunSpeed = 150;
+    float mRunSpeed = 200;
     float mWalkSpeed = 50;
     float mAcceleration = 1;
     float mDeceleration = 10;
